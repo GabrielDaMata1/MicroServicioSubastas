@@ -39,16 +39,55 @@ namespace Application.Service
             }
         }
 
-        public async Task<HttpStatusCode> RegistrarProductoMongoAsync(Subasta subasta, Guid IdUsuario)
+        public async Task<HttpStatusCode> RegistrarSubastaMongoAsync(Subasta subasta, Guid IdUsuario)
         {
             try
             {
-                var resul = await _subastaMongoRepository.RegistrarProductoAsync(subasta, IdUsuario);
+                var resul = await _subastaMongoRepository.RegistrarSubastaAsync(subasta, IdUsuario);
                 return resul;
             }
             catch (System.Exception ex)
             {
                 throw new MongoRepositoryException($"Error al intentar registrar la subasta en MongoDB {ex.Message}", ex);
+            }
+        }
+
+        public async Task<HttpStatusCode> ModificarSubastaPostgreSQLAsync(Subasta subasta, Guid IdUsuario)
+        {
+            try
+            {
+                var resul = await _subastaPostgreSQLRepository.ModificarSubastaAsync(subasta, IdUsuario);
+                return resul;
+            }
+            catch (System.Exception ex)
+            {
+                throw new PostgresRepositoryException($"Error al intentar modificar la subasta en PostgreSQL {ex.Message}", ex);
+            }
+        }
+
+        public async Task<HttpStatusCode> ModificarSubastaMongoAsync(Subasta subasta, Guid IdUsuario)
+        {
+            try
+            {
+                var resul = await _subastaMongoRepository.ModificarSubastaAsync(subasta, IdUsuario);
+                return resul;
+            }
+            catch (System.Exception ex)
+            {
+                throw new MongoRepositoryException($"Error al intentar modificar la subasta en MongoDB {ex.Message}", ex);
+            }
+        }
+
+        public async Task<Subasta> ObtenerSubastaPorIdMongoAsync(Guid idSubasta)
+        {
+            try
+            {
+                var resul = await _subastaMongoRepository.ObtenerSubastaPorId(idSubasta);
+                return resul;
+            }
+            catch (System.Exception ex)
+            {
+                throw new MongoRepositoryException($"Error al intentar obtener la subasta en MongoDB {ex.Message}", ex);
             }
         }
     }

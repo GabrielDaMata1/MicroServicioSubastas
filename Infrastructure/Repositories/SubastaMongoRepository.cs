@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Application.Exceptions;
 using Domain.Entities;
+using Domain.Factory;
 using Domain.Interfaces;
 using Infrastructure.Mappers;
 using Infrastructure.Models.MongoDB;
@@ -24,7 +25,7 @@ namespace Infrastructure.Repositories
             _subastaCollection = database.GetCollection<SubastaMongo>("Subasta");
         }
 
-        public async Task<HttpStatusCode> RegistrarProductoAsync(Subasta subasta, Guid IdUsuario)
+        public async Task<HttpStatusCode> RegistrarSubastaAsync(Subasta subasta, Guid IdUsuario)
         {
             try
             {
@@ -38,5 +39,21 @@ namespace Infrastructure.Repositories
             }
         }
 
+        public async Task<HttpStatusCode> ModificarSubastaAsync(Subasta subasta,  Guid IdUsuario)
+        {
+            var resultado = await _subastaCollection.ReplaceOneAsync(
+                u => u.Id == subasta.Id, subasta.ToMongo(IdUsuario));
+            return HttpStatusCode.OK;
+        }
+
+        public async Task<Subasta> ObtenerSubastaPorId(Guid idSubasta)
+        {
+            var subastaMongo = await _subastaCollection.Find(r => r.Id == idSubasta).FirstOrDefaultAsync();
+            var subastaEntidad = SubastaFactory.CrearSubastaConId(subastaMongo.Id, subastaMongo.Nombre,
+                subastaMongo.Descripcion, subastaMongo.ProductoId, subastaMongo.FechaInicio, subastaMongo.FechaFin,
+                subastaMongo.IncrementoMinimo, subastaMongo.PrecioReserva);
+
+            return subastaEntidad;
+        }
     }
 }

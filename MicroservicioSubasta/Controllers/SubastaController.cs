@@ -17,11 +17,26 @@ namespace MicroservicioSubasta.Controllers
 
         }
         [HttpPost("registroSubasta")]
-        public async Task<IActionResult> RegistrarProducto([FromBody] RegistrarSubastaDTO subastaDTO)
+        public async Task<IActionResult> RegistrarSubasta([FromBody] RegistrarSubastaDTO subastaDTO)
         {
             var resultado = await _mediator.Send(new RegistrarSubastaCommand(subastaDTO));
-            return Ok(resultado);
-        }
+            if (resultado)
+            {
+                return Ok(new ResultadoDTO { Mensaje = "La subasta se registró exitosamente.", Exito = true });
+            }
 
+            return BadRequest(new ResultadoDTO{ Mensaje = "La subasta no pudo ser registrada.", Exito = false });
+        }
+        [HttpPut("modificarSubasta")]
+        public async Task<IActionResult> ModificarSubasta([FromBody] ModificarSubastaDTO subastaModificarDto)
+        {
+            var resultado = await _mediator.Send(new ModificarSubastaCommand(subastaModificarDto));
+            if (resultado)
+            {
+                return Ok(new ResultadoDTO { Mensaje = "La subasta se modificó exitosamente.", Exito = true });
+            }
+
+            return BadRequest(new ResultadoDTO { Mensaje = "La subasta no pudo ser modificada.", Exito = false });
+        }
     }
 }

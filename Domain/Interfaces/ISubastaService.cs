@@ -12,6 +12,11 @@ namespace Domain.Interfaces
     {
         Task<Guid> RegistrarSubastaPostgreSQLAsync(Subasta subasta, Guid IdUsuario);
 
-        Task<HttpStatusCode> RegistrarProductoMongoAsync(Subasta subasta, Guid IdUsuario);
+        Task<HttpStatusCode> RegistrarSubastaMongoAsync(Subasta subasta, Guid IdUsuario);
+
+        Task<HttpStatusCode> ModificarSubastaPostgreSQLAsync(Subasta subasta, Guid IdUsuario);
+        Task<HttpStatusCode> ModificarSubastaMongoAsync(Subasta subasta, Guid IdUsuario);
+
+        Task<Subasta> ObtenerSubastaPorIdMongoAsync(Guid idSubasta);
     }
 }
