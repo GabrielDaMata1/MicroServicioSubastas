@@ -1,0 +1,39 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Domain.Entities;
+using Domain.Value_Object;
+
+namespace Domain.Factory
+{
+    public static class SubastaFactory
+    {
+        public static Subasta CrearSubasta(string nombre, string descripcion, Guid idProducto, DateTime fechaInicio, DateTime fechaFin, decimal incrementoMinimo, decimal precioReserva)
+        {
+            var nombreVO = new NombreSubastaVO(nombre);
+            var descripcionVO = new DescripcionSubastaVO(descripcion);
+            var productoId = idProducto;
+            var fechaInicioVO = new FechaInicioSubastaVO(fechaInicio);
+            var fechaFinVO = new FechaFinSubastaVO(fechaFin);
+            var incrementoMinimoVO = new IncrementoMinimoSubastaVO(incrementoMinimo);
+            var precioReservaVO = new PrecioReservaSubastaVO(precioReserva);
+
+            return new Subasta(nombreVO, descripcionVO, productoId,fechaInicioVO,fechaFinVO,incrementoMinimoVO,precioReservaVO);
+        }
+
+        public static Subasta CrearProductoConId(Guid id, string nombre, string descripcion, Guid idProducto, DateTime fechaInicio, DateTime fechaFin, decimal incrementoMinimo, decimal precioReserva)
+        {
+            var nombreVO = new NombreSubastaVO(nombre);
+            var descripcionVO = new DescripcionSubastaVO(descripcion);
+            var productoId = idProducto;
+            var fechaInicioVO = new FechaInicioSubastaVO(fechaInicio);
+            var fechaFinVO = new FechaFinSubastaVO(fechaFin);
+            var incrementoMinimoVO = new IncrementoMinimoSubastaVO(incrementoMinimo);
+            var precioReservaVO = new PrecioReservaSubastaVO(precioReserva);
+            return new Subasta(id,nombreVO, descripcionVO, productoId, fechaInicioVO, fechaFinVO, incrementoMinimoVO, precioReservaVO);
+        }
+
+    }
+}
