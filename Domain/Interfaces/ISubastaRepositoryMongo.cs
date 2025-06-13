@@ -10,6 +10,9 @@ namespace Domain.Interfaces
 {
     public interface ISubastaRepositoryMongo
     {
-        Task<HttpStatusCode> RegistrarProductoAsync(Subasta subasta, Guid IdUsuario);
+        Task<HttpStatusCode> RegistrarSubastaAsync(Subasta subasta, Guid IdUsuario);
+        Task<HttpStatusCode> ModificarSubastaAsync(Subasta subasta, Guid IdUsuario);
+
+        Task<Subasta> ObtenerSubastaPorId(Guid idSubasta);
     }
 }

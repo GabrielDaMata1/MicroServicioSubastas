@@ -55,6 +55,7 @@ builder.Services.AddHttpClient<ProductoService>(client =>
 builder.Services.AddMassTransit(x =>
 {
     x.AddConsumer<SubastaRegistradaConsumer>();
+    x.AddConsumer<SubastaModificadaConsumer>();
 
     x.UsingRabbitMq((context, cfg) =>
     {
@@ -67,6 +68,11 @@ builder.Services.AddMassTransit(x =>
         cfg.ReceiveEndpoint("subasta-registrada-queue", e =>
         {
             e.ConfigureConsumer<SubastaRegistradaConsumer>(context);
+        });
+
+        cfg.ReceiveEndpoint("subasta-modificada-queue", e =>
+        {
+            e.ConfigureConsumer<SubastaModificadaConsumer>(context);
         });
     });
 
