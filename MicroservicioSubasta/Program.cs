@@ -40,6 +40,7 @@ builder.Services.AddScoped<ISubastaRepositoryMongo, SubastaMongoRepository>();
 builder.Services.AddScoped<ISubastaRepositoryPostgreSQL, SubastaPostgreSQLRepository>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<ISubastaService, SubastaService>();
+builder.Services.AddScoped<IProductoService, ProductoService>();
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(RegistrarSubastaCommand).Assembly));
 

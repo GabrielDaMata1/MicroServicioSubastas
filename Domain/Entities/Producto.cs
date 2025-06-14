@@ -51,5 +51,15 @@ namespace Domain.Entities
             PrecioBaseProducto = precioBaseProducto;
 
         }
+
+        public Producto (Guid id, NombreProductoVO nombreProducto, DescripcionProductoVO descripcionProducto, CategoriaProductoVO categoriaProducto, PrecioBaseProductoVO precioBaseProducto)
+        {
+            Id = id;
+            NombreProducto = nombreProducto;
+            DescripcionProducto = descripcionProducto;
+            CategoriaProducto = categoriaProducto;
+            PrecioBaseProducto = precioBaseProducto;
+
+        }
     }
 }

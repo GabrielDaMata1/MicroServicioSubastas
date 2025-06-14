@@ -17,6 +17,8 @@ namespace Infrastructure.Models.PostgreSQL
         public string Nombre { get; set; }
         [Required]
         public string Descripcion { get; set; }
+        [Required]
+        public string Estado { get; set; }
 
         [Required]
         public Guid idProducto { get; set; }

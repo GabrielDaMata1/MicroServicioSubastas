@@ -129,5 +129,45 @@ namespace Application.Service
                 throw new MongoRepositoryException($"Error al intentar obtener el id del usuario de la subasta en MongoDB {ex.Message}", ex);
             }
         }
+
+        public async Task<List<Subasta>> ObtenerSubastasMongo()
+        {
+            try
+            {
+                var resul = await _subastaMongoRepository.ObtenerSubastas();
+                return resul;
+            }
+            catch (System.Exception ex)
+            {
+                throw new MongoRepositoryException($"Error al intentar obtener las subastas en MongoDB {ex.Message}", ex);
+            }
+        }
+
+        public async Task<Subasta> ObtenerSubastaMongoAsync(Guid idSubasta)
+        {
+            try
+            {
+                var resul = await _subastaMongoRepository.ObtenerSubasta(idSubasta);
+                return resul;
+            }
+            catch (System.Exception ex)
+            {
+                throw new MongoRepositoryException($"Error al intentar obtener la subasta en MongoDB {ex.Message}", ex);
+            }
+        }
+
+        public async Task<List<Subasta>> ObtenerSubastasPorUsuarioMongoAsync(Guid idUsuario)
+        {
+            try
+            {
+                var resul = await _subastaMongoRepository.ObtenerSubastasPorUsuario(idUsuario);
+                return resul;
+            }
+            catch (System.Exception ex)
+            {
+                throw new MongoRepositoryException($"Error al intentar obtener las subastas en MongoDB {ex.Message}", ex);
+            }
+
+        }
     }
 }

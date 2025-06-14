@@ -51,7 +51,7 @@ namespace Infrastructure.Repositories.MongoDB
             var subastaMongo = await _subastaCollection.Find(r => r.Id == idSubasta).FirstOrDefaultAsync();
             var subastaEntidad = SubastaFactory.CrearSubastaConId(subastaMongo.Id, subastaMongo.Nombre,
                 subastaMongo.Descripcion, subastaMongo.ProductoId, subastaMongo.FechaInicio, subastaMongo.FechaFin,
-                subastaMongo.IncrementoMinimo, subastaMongo.PrecioReserva);
+                subastaMongo.IncrementoMinimo, subastaMongo.PrecioReserva, subastaMongo.Estado);
 
             return subastaEntidad;
         }
@@ -69,6 +69,41 @@ namespace Infrastructure.Repositories.MongoDB
 
             return subastaMongo.IdUsuario;
         }
+
+
+
+        public async Task<List<Subasta>> ObtenerSubastas()
+        {
+            var subastasMongo = await _subastaCollection.Find(_ => true).ToListAsync();
+
+            var subastas = subastasMongo.Select(s => SubastaFactory.CrearSubastaConId(s.Id, s.Nombre, s.Descripcion,
+                s.ProductoId, s.FechaInicio, s.FechaFin, s.IncrementoMinimo, s.PrecioReserva, s.Estado)).ToList();
+
+            return subastas;
+        }
+
+        public async Task<Subasta> ObtenerSubasta(Guid idSubasta)
+        {
+            var subastaMongo = await _subastaCollection.Find(r => r.Id == idSubasta).FirstOrDefaultAsync();
+            var subasta = SubastaFactory.CrearSubastaConId(subastaMongo.Id, subastaMongo.Nombre, subastaMongo.Descripcion,
+                subastaMongo.ProductoId, subastaMongo.FechaInicio, subastaMongo.FechaFin, subastaMongo.IncrementoMinimo, subastaMongo.PrecioReserva, subastaMongo.Estado);
+
+            return subasta;
+        }
+
+        public async Task<List<Subasta>> ObtenerSubastasPorUsuario(Guid idUsuario)
+        {
+            var filtro = Builders<SubastaMongo>.Filter.Eq(s => s.IdUsuario, idUsuario);
+            var subastasMongo = await _subastaCollection.Find(filtro).ToListAsync();
+
+            var subastas = subastasMongo.Select(s => SubastaFactory.CrearSubastaConId(s.Id, s.Nombre, s.Descripcion, s.ProductoId, s.FechaInicio, s.FechaFin,
+                s.IncrementoMinimo, s.PrecioReserva, s.Estado)).ToList();
+
+            return subastas;
+        }
+
+
+
 
     }
 }

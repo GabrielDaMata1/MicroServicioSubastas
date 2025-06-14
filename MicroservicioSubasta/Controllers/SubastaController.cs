@@ -1,5 +1,6 @@
 ﻿using Application.Command;
 using Application.DTOs;
+using Application.Querys;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -49,6 +50,32 @@ namespace MicroservicioSubasta.Controllers
             }
 
             return BadRequest(new ResultadoDTO { Mensaje = "La subasta no pudo ser eliminada.", Exito = false });
+        }
+
+        [HttpGet("obtenerSubastas")]
+        public async Task<IActionResult> ObtenerSubasta()
+        {
+            var resultado = await _mediator.Send(new ConsultarSubastasQuery());
+                return Ok(resultado);
+                
+        }
+
+        [HttpGet("obtenerSubasta/{idSubasta}")]
+        public async Task<IActionResult> ObtenerSubastaPorId([FromRoute] Guid idSubasta)
+        {
+            var dto = new ConsultarSubastaDTO {idSubasta = idSubasta };
+            var resultado = await _mediator.Send(new ConsultarSubastaQuery(dto));
+            return Ok(resultado);
+
+        }
+
+        [HttpGet("obtenerSubastasUsuario/{correo}")]
+        public async Task<IActionResult> ObtenerSubastaPorUsuario([FromRoute] string correo)
+        {
+            var dto = new ConsultarSubastasUsuarioDTO() { correoUsuario = correo };
+            var resultado = await _mediator.Send(new ConsultarSubastasUsuarioQuery(dto));
+            return Ok(resultado);
+
         }
     }
 }

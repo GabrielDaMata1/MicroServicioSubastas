@@ -19,6 +19,8 @@ namespace Infrastructure.Models.MongoDB
 
         [BsonElement("Descripcion")]
         public string Descripcion { get; set; }
+        [BsonElement("Estado")]
+        public string Estado { get; set; }
 
         [BsonElement("ProductoId")]
         [BsonRepresentation(BsonType.String)]

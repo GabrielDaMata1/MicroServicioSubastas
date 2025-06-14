@@ -23,5 +23,7 @@ namespace Application.DTOs
         public string correoUsuario { get; set; }
 
         public Guid idProducto { get; set; }
+
+        public string estado { get; set; }
     }
 }

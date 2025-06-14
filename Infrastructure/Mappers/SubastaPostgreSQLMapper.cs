@@ -22,7 +22,8 @@ namespace Infrastructure.Mappers
                 idProducto = subasta.idProductoSubasta,
                 IdUsuario = idUsuario,
                 incrementoMinimo = subasta.incrementoMinimoSubasta.incrementoMinimo,
-                precioReserva = subasta.precioReservaSubasta.precioReserva
+                precioReserva = subasta.precioReservaSubasta.precioReserva,
+                Estado = subasta.estadoSubasta.estado
             };
         }
 
