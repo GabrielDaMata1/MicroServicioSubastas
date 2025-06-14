@@ -24,5 +24,10 @@ namespace Domain.Interfaces
         Task<bool> EliminarSubastaPostgreSQLAsync(Guid idSubasta);
 
         Task<Guid> ObtenerUsuarioIdPorSubastaIdMongoAsync(Guid idSubasta);
+        Task<List<Subasta>> ObtenerSubastasMongo();
+
+        Task<Subasta> ObtenerSubastaMongoAsync(Guid idSubasta);
+
+        Task<List<Subasta>> ObtenerSubastasPorUsuarioMongoAsync(Guid idUsuario);
     }
 }

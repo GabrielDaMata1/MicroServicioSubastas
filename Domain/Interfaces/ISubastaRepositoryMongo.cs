@@ -20,5 +20,10 @@ namespace Domain.Interfaces
 
         Task<Guid> ObtenerUsuarioIdPorSubastaId(Guid idSubasta);
 
+        Task<List<Subasta>> ObtenerSubastas();
+
+        Task<Subasta> ObtenerSubasta(Guid idSubasta);
+
+        Task<List<Subasta>> ObtenerSubastasPorUsuario(Guid idUsuario);
     }
 }

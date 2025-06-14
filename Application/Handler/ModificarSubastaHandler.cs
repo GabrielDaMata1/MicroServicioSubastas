@@ -45,7 +45,8 @@ namespace Application.Handler
                     request.subastaDto.fechaInicio,
                     request.subastaDto.fechaFin,
                     request.subastaDto.incrementoMinimo,
-                    request.subastaDto.precioReserva
+                    request.subastaDto.precioReserva,
+                    request.subastaDto.estado
                 );
 
                 var subastaModificada = await _subastaService.ModificarSubastaPostgreSQLAsync(subasta, idUsuario);

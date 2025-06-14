@@ -18,6 +18,7 @@ namespace Domain.Entities
         public FechaFinSubastaVO fechaFinSubasta { get; set; }
         public IncrementoMinimoSubastaVO incrementoMinimoSubasta { get; set; }
         public PrecioReservaSubastaVO precioReservaSubasta { get; set; }
+        public EstadoSubastaVO estadoSubasta { get; set; }
 
         public Subasta(NombreSubastaVO nombreSubasta, DescripcionSubastaVO descripcionSubasta, Guid idProductoSubasta, FechaInicioSubastaVO fechaInicioSubasta, FechaFinSubastaVO fechaFinSubasta, IncrementoMinimoSubastaVO incrementoMinimoSubasta, PrecioReservaSubastaVO precioReservaSubasta)
         {
@@ -29,9 +30,11 @@ namespace Domain.Entities
             this.fechaFinSubasta = fechaFinSubasta;
             this.incrementoMinimoSubasta = incrementoMinimoSubasta;
             this.precioReservaSubasta = precioReservaSubasta;
+            this.estadoSubasta = new EstadoSubastaVO("Pending");
+
         }
         [JsonConstructor]
-        public Subasta(Guid id, NombreSubastaVO nombreSubasta, DescripcionSubastaVO descripcionSubasta, Guid idProductoSubasta, FechaInicioSubastaVO fechaInicioSubasta, FechaFinSubastaVO fechaFinSubasta, IncrementoMinimoSubastaVO incrementoMinimoSubasta, PrecioReservaSubastaVO precioReservaSubasta)
+        public Subasta(Guid id, NombreSubastaVO nombreSubasta, DescripcionSubastaVO descripcionSubasta, Guid idProductoSubasta, FechaInicioSubastaVO fechaInicioSubasta, FechaFinSubastaVO fechaFinSubasta, IncrementoMinimoSubastaVO incrementoMinimoSubasta, PrecioReservaSubastaVO precioReservaSubasta, EstadoSubastaVO estadoSubasta)
         {
             Id = id;
             this.nombreSubasta = nombreSubasta;
@@ -41,6 +44,7 @@ namespace Domain.Entities
             this.fechaFinSubasta = fechaFinSubasta;
             this.incrementoMinimoSubasta = incrementoMinimoSubasta;
             this.precioReservaSubasta = precioReservaSubasta;
+            this.estadoSubasta=estadoSubasta;
         }
     }
 

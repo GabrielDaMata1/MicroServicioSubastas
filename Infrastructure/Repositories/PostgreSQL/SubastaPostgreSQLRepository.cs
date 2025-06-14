@@ -47,6 +47,7 @@ namespace Infrastructure.Repositories.PostgreSQL
             subastaModificar.IdUsuario = IdUsuario;
             subastaModificar.incrementoMinimo = subasta.incrementoMinimoSubasta.incrementoMinimo;
             subastaModificar.precioReserva = subasta.precioReservaSubasta.precioReserva;
+            subastaModificar.Estado = subasta.estadoSubasta.estado;
             _dbContext.Set<SubastaPostgreSQL>().Update(subastaModificar);
             await _dbContext.SaveChangesAsync();
             return HttpStatusCode.OK;

@@ -20,19 +20,27 @@ namespace Application.Handler
         private readonly IPublishEndpoint _publishEndpoint;
         private readonly ISubastaService _subastaService;
         private readonly IUsuarioService _usuarioService;
+        private readonly IProductoService _productoService;
 
-        public RegistrarSubastaHandler(ISubastaService subastaService, IPublishEndpoint publishEndpoint, IUsuarioService usuarioService)
+        public RegistrarSubastaHandler(ISubastaService subastaService, IPublishEndpoint publishEndpoint, IUsuarioService usuarioService, IProductoService productoService)
         {
             _publishEndpoint = publishEndpoint;
             _subastaService = subastaService;
             _usuarioService = usuarioService;
+            _productoService = productoService;
         }
 
         public async Task<bool> Handle(RegistrarSubastaCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                Guid idUsuario = await _usuarioService.ObtenerUsuarioPorIdAsync(request.SubastaDto.correoUsuario);
+                var idUsuario = await _usuarioService.ObtenerUsuarioPorIdAsync(request.SubastaDto.correoUsuario);
+
+                var idUsuarioProducto = await _productoService.ObtenerUsuarioIdPorIdProductoAsync(request.SubastaDto.idProducto);
+
+
+                if (idUsuario != idUsuarioProducto)
+                    throw new ProductoNoPerteneceAlUsuarioException();
 
                 var subasta = SubastaFactory.CrearSubasta(
                     request.SubastaDto.Nombre,
@@ -41,9 +49,9 @@ namespace Application.Handler
                     request.SubastaDto.fechaInicio,
                     request.SubastaDto.fechaFin,
                     request.SubastaDto.incrementoMinimo,
-                    request.SubastaDto.precioReserva
+                    request.SubastaDto.precioReserva,
+                    "Pending"
                 );
-
                 var subastaId = await _subastaService.RegistrarSubastaPostgreSQLAsync(subasta, idUsuario);
 
                 if (subastaId == Guid.Empty)
@@ -51,6 +59,10 @@ namespace Application.Handler
 
                 await _publishEndpoint.Publish(new SubastaRegistradaEvent(subasta, idUsuario));
                 return true;
+            }
+            catch (ProductoNoPerteneceAlUsuarioException)
+            {
+                throw;
             }
             catch (FalloAlRegistrarSubastaException)
             {
