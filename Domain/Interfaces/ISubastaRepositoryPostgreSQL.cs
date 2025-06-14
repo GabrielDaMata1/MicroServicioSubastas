@@ -12,5 +12,7 @@ namespace Domain.Interfaces
     {
         Task<Guid> RegistrarSubastaAsync(Subasta subasta, Guid IdUsuario);
         Task<HttpStatusCode> ModificarSubastaAsync(Subasta subasta, Guid IdUsuario);
+
+        Task<bool> EliminarSubastaAsync(Guid idSubasta);
     }
 }
