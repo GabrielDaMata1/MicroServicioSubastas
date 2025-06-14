@@ -5,6 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Entities;
+using MongoDB.Driver;
 
 namespace Domain.Interfaces
 {
@@ -14,5 +15,10 @@ namespace Domain.Interfaces
         Task<HttpStatusCode> ModificarSubastaAsync(Subasta subasta, Guid IdUsuario);
 
         Task<Subasta> ObtenerSubastaPorId(Guid idSubasta);
+
+        Task<bool> EliminarSubastaAsync(Guid idSubasta);
+
+        Task<Guid> ObtenerUsuarioIdPorSubastaId(Guid idSubasta);
+
     }
 }

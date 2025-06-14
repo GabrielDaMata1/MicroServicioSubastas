@@ -12,7 +12,7 @@ using Infrastructure.Mappers;
 using Infrastructure.Models.MongoDB;
 using MongoDB.Driver;
 
-namespace Infrastructure.Repositories
+namespace Infrastructure.Repositories.MongoDB
 {
     public class SubastaMongoRepository : ISubastaRepositoryMongo
     {
@@ -55,5 +55,20 @@ namespace Infrastructure.Repositories
 
             return subastaEntidad;
         }
+
+        public async Task<bool> EliminarSubastaAsync(Guid idSubasta)
+        {
+            var filtro = Builders<SubastaMongo>.Filter.Eq(p => p.Id, idSubasta);
+            var resultado = await _subastaCollection.DeleteOneAsync(filtro);
+
+            return resultado.DeletedCount > 0;
+        }
+        public async Task<Guid> ObtenerUsuarioIdPorSubastaId(Guid idSubasta)
+        {
+            var subastaMongo = await _subastaCollection.Find(r => r.Id == idSubasta).FirstOrDefaultAsync();
+
+            return subastaMongo.IdUsuario;
+        }
+
     }
 }

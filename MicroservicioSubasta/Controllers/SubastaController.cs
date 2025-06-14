@@ -38,5 +38,17 @@ namespace MicroservicioSubasta.Controllers
 
             return BadRequest(new ResultadoDTO { Mensaje = "La subasta no pudo ser modificada.", Exito = false });
         }
+
+        [HttpDelete("eliminarSubasta")]
+        public async Task<IActionResult> EliminarSubasta([FromBody] EliminarSubastaDTO subastaEliminarDto)
+        {
+            var resultado = await _mediator.Send(new EliminarSubastaCommand(subastaEliminarDto));
+            if (resultado)
+            {
+                return Ok(new ResultadoDTO { Mensaje = "La subasta se eliminó exitosamente.", Exito = true });
+            }
+
+            return BadRequest(new ResultadoDTO { Mensaje = "La subasta no pudo ser eliminada.", Exito = false });
+        }
     }
 }

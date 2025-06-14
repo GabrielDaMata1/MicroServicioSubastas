@@ -7,8 +7,9 @@ using Application.Command;
 using Application.Service;
 using Domain.Interfaces;
 using Infrastructure.Consumers;
-using Infrastructure.Repositories;
 using MassTransit;
+using Infrastructure.Repositories.MongoDB;
+using Infrastructure.Repositories.PostgreSQL;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,6 +57,7 @@ builder.Services.AddMassTransit(x =>
 {
     x.AddConsumer<SubastaRegistradaConsumer>();
     x.AddConsumer<SubastaModificadaConsumer>();
+    x.AddConsumer<SubastaEliminadaConsumer>();
 
     x.UsingRabbitMq((context, cfg) =>
     {
@@ -73,6 +75,11 @@ builder.Services.AddMassTransit(x =>
         cfg.ReceiveEndpoint("subasta-modificada-queue", e =>
         {
             e.ConfigureConsumer<SubastaModificadaConsumer>(context);
+        });
+
+        cfg.ReceiveEndpoint("subasta-eliminada-queue", e =>
+        {
+            e.ConfigureConsumer<SubastaEliminadaConsumer>(context);
         });
     });
 

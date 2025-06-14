@@ -90,5 +90,44 @@ namespace Application.Service
                 throw new MongoRepositoryException($"Error al intentar obtener la subasta en MongoDB {ex.Message}", ex);
             }
         }
+
+        public async Task<bool> EliminarSubastaMongoAsync(Guid idSubasta)
+        {
+            try
+            {
+                var resul = await _subastaMongoRepository.EliminarSubastaAsync(idSubasta);
+                return resul;
+            }
+            catch (System.Exception ex)
+            {
+                throw new MongoRepositoryException($"Error al intentar eliminar la subasta en MongoDB {ex.Message}", ex);
+            }
+        }
+
+        public async Task<bool> EliminarSubastaPostgreSQLAsync(Guid idSubasta)
+        {
+            try
+            {
+                var resul = await _subastaPostgreSQLRepository.EliminarSubastaAsync(idSubasta);
+                return resul;
+            }
+            catch (System.Exception ex)
+            {
+                throw new PostgresRepositoryException($"Error al intentar eliminar la subasta en PostgreSQL {ex.Message}", ex);
+            }
+        }
+
+        public async Task<Guid> ObtenerUsuarioIdPorSubastaIdMongoAsync(Guid idSubasta)
+        {
+            try
+            {
+                var resul = await _subastaMongoRepository.ObtenerUsuarioIdPorSubastaId(idSubasta);
+                return resul;
+            }
+            catch (System.Exception ex)
+            {
+                throw new MongoRepositoryException($"Error al intentar obtener el id del usuario de la subasta en MongoDB {ex.Message}", ex);
+            }
+        }
     }
 }

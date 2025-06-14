@@ -11,7 +11,7 @@ using Infrastructure.Models.PostgreSQL;
 using Infrastructure.Persistance;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repositories
+namespace Infrastructure.Repositories.PostgreSQL
 {
     public class SubastaPostgreSQLRepository : ISubastaRepositoryPostgreSQL
     {
@@ -50,6 +50,20 @@ namespace Infrastructure.Repositories
             _dbContext.Set<SubastaPostgreSQL>().Update(subastaModificar);
             await _dbContext.SaveChangesAsync();
             return HttpStatusCode.OK;
+        }
+
+        public async Task<bool> EliminarSubastaAsync(Guid idSubasta)
+        {
+            var subasta = await _dbContext.Set<SubastaPostgreSQL>()
+                .FirstOrDefaultAsync(p => p.Id == idSubasta);
+
+            if (subasta == null)
+                return false;
+
+            _dbContext.Set<SubastaPostgreSQL>().Remove(subasta);
+            await _dbContext.SaveChangesAsync();
+
+            return true;
         }
     }
 }

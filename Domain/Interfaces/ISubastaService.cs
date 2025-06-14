@@ -18,5 +18,11 @@ namespace Domain.Interfaces
         Task<HttpStatusCode> ModificarSubastaMongoAsync(Subasta subasta, Guid IdUsuario);
 
         Task<Subasta> ObtenerSubastaPorIdMongoAsync(Guid idSubasta);
+
+        Task<bool> EliminarSubastaMongoAsync(Guid idSubasta);
+
+        Task<bool> EliminarSubastaPostgreSQLAsync(Guid idSubasta);
+
+        Task<Guid> ObtenerUsuarioIdPorSubastaIdMongoAsync(Guid idSubasta);
     }
 }
