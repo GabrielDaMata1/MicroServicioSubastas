@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Application.Command;
+using Application.DTOs;
 using Application.Exceptions;
 using Application.Service;
 using Domain.Entities;
@@ -38,9 +39,16 @@ namespace Application.Handler
 
                 var idUsuarioProducto = await _productoService.ObtenerUsuarioIdPorIdProductoAsync(request.SubastaDto.idProducto);
 
+                var producto = await _productoService.ObtenerProductoPorGuid(request.SubastaDto.idProducto);
 
-                if (idUsuario != idUsuarioProducto)
+
+
+
+               if (idUsuario != idUsuarioProducto)
                     throw new ProductoNoPerteneceAlUsuarioException();
+               
+                if (producto.EstadoProducto.estadoProducto.Equals("Subastando"))
+                    throw new ProductoYaSubastandoException();
 
                 var subasta = SubastaFactory.CrearSubasta(
                     request.SubastaDto.Nombre,
@@ -52,19 +60,26 @@ namespace Application.Handler
                     request.SubastaDto.precioReserva,
                     "Pending"
                 );
+
                 var subastaId = await _subastaService.RegistrarSubastaPostgreSQLAsync(subasta, idUsuario);
 
                 if (subastaId == Guid.Empty)
                     throw new FalloAlRegistrarSubastaException("No se pudo registrar la subasta en la base de datos PostgreSQL. ");
 
+
+                var modificarEstadoProducto = await _productoService.ModificarProductoAsync(request.SubastaDto.correoUsuario, producto);
+
+                if (!modificarEstadoProducto)
+                    throw new FalloAlModificarProductoException();
+
                 await _publishEndpoint.Publish(new SubastaRegistradaEvent(subasta, idUsuario));
                 return true;
             }
-            catch (ProductoNoPerteneceAlUsuarioException)
+            catch (FalloAlRegistrarSubastaException)
             {
                 throw;
             }
-            catch (FalloAlRegistrarSubastaException)
+            catch (FalloAlModificarProductoException)
             {
                 throw;
             }

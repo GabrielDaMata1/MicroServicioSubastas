@@ -46,9 +46,11 @@ namespace Application.Service
                     dto.Id,
                     new NombreProductoVO(dto.NombreProducto),
                     new DescripcionProductoVO(dto.DescripcionProducto),
+                    new ImagenURLProductoVO(dto.ImagenURLProducto),
+                    new PrecioBaseProductoVO(dto.PrecioBaseProducto),
                     new CategoriaProductoVO(dto.CategoriaProducto),
-                    new PrecioBaseProductoVO(dto.PrecioBaseProducto)
-                    
+                    new EstadoProductoVO(dto.EstadoProducto)
+
                 );
 
                 return producto;
@@ -79,5 +81,49 @@ namespace Application.Service
 
             }
         }
+
+        public async Task<bool> ModificarProductoAsync(string correo, Producto producto)
+        {
+
+            var productoModificarDto= new ModificarProductoDTO(producto.Id, producto.NombreProducto.Nombre,
+                producto.DescripcionProducto.descripcion, producto.ImagenURLProducto.url,
+                producto.PrecioBaseProducto.precio, producto.CategoriaProducto.categoria, "Subastando");
+            var requestUri = $"http://localhost:5002/api/Productos/modificarProducto/{correo}";
+
+            var contenidoJson = JsonSerializer.Serialize(productoModificarDto);
+            var contenido = new StringContent(contenidoJson, Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PutAsync(requestUri, contenido);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public async Task<bool> ModificarProductoDisponibleAsync(string correo, Producto producto)
+        {
+
+            var productoModificarDto = new ModificarProductoDTO(producto.Id, producto.NombreProducto.Nombre,
+                producto.DescripcionProducto.descripcion, producto.ImagenURLProducto.url,
+                producto.PrecioBaseProducto.precio, producto.CategoriaProducto.categoria, "Disponible");
+            var requestUri = $"http://localhost:5002/api/Productos/modificarProducto/{correo}";
+
+            var contenidoJson = JsonSerializer.Serialize(productoModificarDto);
+            var contenido = new StringContent(contenidoJson, Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PutAsync(requestUri, contenido);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+
     }
 }

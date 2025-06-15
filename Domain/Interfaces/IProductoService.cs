@@ -11,5 +11,8 @@ namespace Domain.Interfaces
     {
         Task<Producto> ObtenerProductoPorGuid(Guid idProducto);
         Task<Guid> ObtenerUsuarioIdPorIdProductoAsync(Guid idProducto);
+        Task<bool> ModificarProductoAsync(string correo, Producto productoModificar);
+
+        Task<bool> ModificarProductoDisponibleAsync(string correo, Producto producto);
     }
 }
