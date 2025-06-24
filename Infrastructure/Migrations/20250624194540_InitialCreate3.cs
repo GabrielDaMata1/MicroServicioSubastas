@@ -5,14 +5,14 @@
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate25 : Migration
+    public partial class InitialCreate3 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "Estado",
-                table: "Subasta",
+                name: "Resultado",
+                table: "HistorialSubasta",
                 type: "text",
                 nullable: false,
                 defaultValue: "");
@@ -22,8 +22,8 @@ namespace Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Estado",
-                table: "Subasta");
+                name: "Resultado",
+                table: "HistorialSubasta");
         }
     }
 }

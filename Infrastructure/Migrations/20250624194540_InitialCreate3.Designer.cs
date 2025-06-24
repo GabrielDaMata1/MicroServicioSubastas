@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(SubastaDbContext))]
-    [Migration("20250614011418_InitialCreate25")]
-    partial class InitialCreate25
+    [Migration("20250624194540_InitialCreate3")]
+    partial class InitialCreate3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,32 @@ namespace Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("Infrastructure.Models.PostgreSQL.HistorialSubastasPostgreSQL", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("IdSubasta")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("IdUsuario")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("MontoFinal")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("Resultado")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdSubasta");
+
+                    b.ToTable("HistorialSubasta");
+                });
 
             modelBuilder.Entity("Infrastructure.Models.PostgreSQL.SubastaPostgreSQL", b =>
                 {
@@ -67,6 +93,17 @@ namespace Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Subasta");
+                });
+
+            modelBuilder.Entity("Infrastructure.Models.PostgreSQL.HistorialSubastasPostgreSQL", b =>
+                {
+                    b.HasOne("Infrastructure.Models.PostgreSQL.SubastaPostgreSQL", "Subasta")
+                        .WithMany()
+                        .HasForeignKey("IdSubasta")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subasta");
                 });
 #pragma warning restore 612, 618
         }

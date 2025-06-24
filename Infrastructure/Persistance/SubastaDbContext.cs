@@ -14,6 +14,7 @@ namespace Infrastructure.Persistance
 
 
         public DbSet<SubastaPostgreSQL> Subasta { get; set; }
+        public DbSet<HistorialSubastasPostgreSQL> HistorialSubasta { get; set; }
 
 
 

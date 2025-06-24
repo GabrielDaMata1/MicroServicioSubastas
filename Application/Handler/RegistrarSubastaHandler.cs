@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Application.Command;
 using Application.DTOs;
 using Application.Exceptions;
+using Application.External_Services.Hangfire;
 using Application.Service;
 using Domain.Entities;
 using Domain.Events;
@@ -22,13 +23,15 @@ namespace Application.Handler
         private readonly ISubastaService _subastaService;
         private readonly IUsuarioService _usuarioService;
         private readonly IProductoService _productoService;
+        private readonly ISubastaSchedule _subastaSchedule;
 
-        public RegistrarSubastaHandler(ISubastaService subastaService, IPublishEndpoint publishEndpoint, IUsuarioService usuarioService, IProductoService productoService)
+        public RegistrarSubastaHandler(ISubastaService subastaService, IPublishEndpoint publishEndpoint, IUsuarioService usuarioService, IProductoService productoService, ISubastaSchedule subastaSchedule)
         {
             _publishEndpoint = publishEndpoint;
             _subastaService = subastaService;
             _usuarioService = usuarioService;
             _productoService = productoService;
+            _subastaSchedule= subastaSchedule;
         }
 
         public async Task<bool> Handle(RegistrarSubastaCommand request, CancellationToken cancellationToken)
@@ -67,12 +70,16 @@ namespace Application.Handler
                     throw new FalloAlRegistrarSubastaException("No se pudo registrar la subasta en la base de datos PostgreSQL. ");
 
 
-                var modificarEstadoProducto = await _productoService.ModificarProductoAsync(request.SubastaDto.correoUsuario, producto);
+                var modificarEstadoProducto = await _productoService.ModificarProductoAsync(request.SubastaDto.correoUsuario, producto,"Subastando");
 
                 if (!modificarEstadoProducto)
                     throw new FalloAlModificarProductoException();
 
                 await _publishEndpoint.Publish(new SubastaRegistradaEvent(subasta, idUsuario));
+                _subastaSchedule.ProgramarEventosDeSubasta(subastaId,request.SubastaDto.fechaInicio,request.SubastaDto.fechaFin);
+
+
+
                 return true;
             }
             catch (FalloAlRegistrarSubastaException)

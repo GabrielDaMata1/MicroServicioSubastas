@@ -31,7 +31,7 @@ namespace Application.Service
                 }
 
                 var contenido = await response.Content.ReadAsStringAsync();
-
+                Console.WriteLine(contenido);
                 var dto = JsonSerializer.Deserialize<ProductoDTO>(contenido, new JsonSerializerOptions
                 {
                     PropertyNameCaseInsensitive = true
@@ -82,12 +82,12 @@ namespace Application.Service
             }
         }
 
-        public async Task<bool> ModificarProductoAsync(string correo, Producto producto)
+        public async Task<bool> ModificarProductoAsync(string correo, Producto producto, string estado)
         {
 
             var productoModificarDto= new ModificarProductoDTO(producto.Id, producto.NombreProducto.Nombre,
                 producto.DescripcionProducto.descripcion, producto.ImagenURLProducto.url,
-                producto.PrecioBaseProducto.precio, producto.CategoriaProducto.categoria, "Subastando");
+                producto.PrecioBaseProducto.precio, producto.CategoriaProducto.categoria, estado);
             var requestUri = $"http://localhost:5002/api/Productos/modificarProducto/{correo}";
 
             var contenidoJson = JsonSerializer.Serialize(productoModificarDto);

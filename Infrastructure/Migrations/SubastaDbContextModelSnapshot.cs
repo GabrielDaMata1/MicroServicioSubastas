@@ -22,6 +22,32 @@ namespace Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Infrastructure.Models.PostgreSQL.HistorialSubastasPostgreSQL", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("IdSubasta")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("IdUsuario")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("MontoFinal")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("Resultado")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdSubasta");
+
+                    b.ToTable("HistorialSubasta");
+                });
+
             modelBuilder.Entity("Infrastructure.Models.PostgreSQL.SubastaPostgreSQL", b =>
                 {
                     b.Property<Guid>("Id")
@@ -64,6 +90,17 @@ namespace Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Subasta");
+                });
+
+            modelBuilder.Entity("Infrastructure.Models.PostgreSQL.HistorialSubastasPostgreSQL", b =>
+                {
+                    b.HasOne("Infrastructure.Models.PostgreSQL.SubastaPostgreSQL", "Subasta")
+                        .WithMany()
+                        .HasForeignKey("IdSubasta")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subasta");
                 });
 #pragma warning restore 612, 618
         }

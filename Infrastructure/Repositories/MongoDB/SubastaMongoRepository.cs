@@ -102,8 +102,13 @@ namespace Infrastructure.Repositories.MongoDB
             return subastas;
         }
 
+        public async Task<HttpStatusCode> ActualizarEstadoSubasta(Guid idSubasta, string nuevoEstado)
+        {
+            var filtro = Builders<SubastaMongo>.Filter.Eq(s => s.Id, idSubasta);
+            var actualizacion = Builders<SubastaMongo>.Update.Set(s => s.Estado, nuevoEstado);
 
-
-
+            await _subastaCollection.UpdateOneAsync(filtro, actualizacion);
+            return HttpStatusCode.OK;
+        }
     }
 }

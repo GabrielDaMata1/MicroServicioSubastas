@@ -16,13 +16,17 @@ namespace Application.Service
     {
         private readonly ISubastaRepositoryMongo _subastaMongoRepository;
         private readonly ISubastaRepositoryPostgreSQL _subastaPostgreSQLRepository;
+        private readonly IHistorialSubastaPostgreSQLRepository _historialSubastaPostgreSQLRepository;
+        private readonly IHistorialSubastaMongoRepository _historialSubastaMongoRepository;
 
 
-        public SubastaService(ISubastaRepositoryMongo subastaMongoRepository, ISubastaRepositoryPostgreSQL subastaPostgreSQLRepository)
+        public SubastaService(ISubastaRepositoryMongo subastaMongoRepository, ISubastaRepositoryPostgreSQL subastaPostgreSQLRepository, IHistorialSubastaMongoRepository historialSubastaMongoRepository, IHistorialSubastaPostgreSQLRepository historialSubastaPostgreSqlRepository)
 
         {
             _subastaMongoRepository = subastaMongoRepository;
             _subastaPostgreSQLRepository = subastaPostgreSQLRepository;
+            _historialSubastaMongoRepository= historialSubastaMongoRepository;
+            _historialSubastaPostgreSQLRepository = historialSubastaPostgreSqlRepository;
 
         }
 
@@ -168,6 +172,58 @@ namespace Application.Service
                 throw new MongoRepositoryException($"Error al intentar obtener las subastas en MongoDB {ex.Message}", ex);
             }
 
+        }
+
+        public async Task<HttpStatusCode> ActualizarEstadoSubastaMongoAsync(Guid idSubasta, string nuevoEstado)
+        {
+            try
+            {
+                var resul = await _subastaMongoRepository.ActualizarEstadoSubasta(idSubasta, nuevoEstado);
+                return resul;
+            }
+            catch (System.Exception ex)
+            {
+                throw new MongoRepositoryException($"Error al intentar modificar el estado de la subasta en MongoDB {ex.Message}", ex);
+            }
+        }
+
+        public async Task<HttpStatusCode> ActualizarEstadoSubastaPostgreSQLAsync(Guid idSubasta, string nuevoEstado)
+        {
+            try
+            {
+                var resul = await _subastaPostgreSQLRepository.ActualizarEstadoSubasta(idSubasta, nuevoEstado);
+                return resul;
+            }
+            catch (System.Exception ex)
+            {
+                throw new PostgresRepositoryException($"Error al intentar modificar el estado de la subasta en PostgreSQL {ex.Message}", ex);
+            }
+        }
+
+        public async Task<HttpStatusCode> RegistrarHistorialSubastaMongoAsync(HistorialSubasta historialSubasta, string resultado)
+        {
+            try
+            {
+                var resul = await _historialSubastaMongoRepository.registrarHistorialSubastaAsync(historialSubasta,resultado);
+                return resul;
+            }
+            catch (System.Exception ex)
+            {
+                throw new MongoRepositoryException($"Error al intentar registrar el historial de la subasta en MongoDB {ex.Message}", ex);
+            }
+        }
+
+        public async Task<Guid> RegistrarHistorialSubastaPostgreSQLAsync(HistorialSubasta historialSubasta, string resultado)
+        {
+            try
+            {
+                var resul = await _historialSubastaPostgreSQLRepository.registrarHistorialSubastaAsync(historialSubasta,resultado);
+                return resul;
+            }
+            catch (System.Exception ex)
+            {
+                throw new PostgresRepositoryException($"Error al intentar registrar el historial de la subasta en PostgreSQL {ex.Message}", ex);
+            }
         }
     }
 }

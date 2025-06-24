@@ -66,5 +66,13 @@ namespace Infrastructure.Repositories.PostgreSQL
 
             return true;
         }
+
+        public async Task<HttpStatusCode> ActualizarEstadoSubasta(Guid idSubasta, string nuevoEstado)
+        {
+            var subasta = await _dbContext.Subasta.FindAsync(idSubasta);
+            subasta.Estado = nuevoEstado;
+            await _dbContext.SaveChangesAsync();
+            return HttpStatusCode.OK;
+        }
     }
 }

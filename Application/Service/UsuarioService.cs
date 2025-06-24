@@ -31,6 +31,20 @@ public class UsuarioService: IUsuarioService
         }
     }
 
+    public async Task<string> ObtenerCorreoPorIdAsync(Guid idUsuario)
+    {
+        var response = await _httpClient.GetAsync($"http://localhost:5001/api/usuarios/Correo/{idUsuario}");
+
+        if (!response.IsSuccessStatusCode)
+        {
+            return null;
+        }
+
+        var correo = await response.Content.ReadAsStringAsync();
+
+        return correo;
+    }
+
 
 
 
