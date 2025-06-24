@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(SubastaDbContext))]
-    [Migration("20250611165332_InitialCreate2")]
-    partial class InitialCreate2
+    [Migration("20250624173921_InitialCreate8")]
+    partial class InitialCreate8
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,13 +25,42 @@ namespace Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Infrastructure.Models.SubastaPostgreSQL", b =>
+            modelBuilder.Entity("Infrastructure.Models.PostgreSQL.HistorialSubastasPostgreSQL", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("IdSubasta")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("IdUsuario")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("MontoFinal")
+                        .HasColumnType("numeric");
+
+                    b.Property<Guid>("SubastaId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SubastaId");
+
+                    b.ToTable("HistorialSubasta");
+                });
+
+            modelBuilder.Entity("Infrastructure.Models.PostgreSQL.SubastaPostgreSQL", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Estado")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -63,6 +92,17 @@ namespace Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Subasta");
+                });
+
+            modelBuilder.Entity("Infrastructure.Models.PostgreSQL.HistorialSubastasPostgreSQL", b =>
+                {
+                    b.HasOne("Infrastructure.Models.PostgreSQL.SubastaPostgreSQL", "Subasta")
+                        .WithMany()
+                        .HasForeignKey("SubastaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subasta");
                 });
 #pragma warning restore 612, 618
         }

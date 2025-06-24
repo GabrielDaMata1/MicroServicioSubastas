@@ -14,5 +14,7 @@ namespace Domain.Interfaces
         Task<HttpStatusCode> ModificarSubastaAsync(Subasta subasta, Guid IdUsuario);
 
         Task<bool> EliminarSubastaAsync(Guid idSubasta);
+
+        Task<HttpStatusCode> ActualizarEstadoSubasta(Guid idSubasta, string nuevoEstado);
     }
 }

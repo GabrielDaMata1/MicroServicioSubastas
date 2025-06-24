@@ -52,7 +52,8 @@ namespace Application.Handler
                     NombreProducto = producto.NombreProducto.Nombre,
                     DescripcionProducto = producto.DescripcionProducto.descripcion,
                     PrecioBase = producto.PrecioBaseProducto.precio,
-                    Categoria = producto.CategoriaProducto.categoria
+                    Categoria = producto.CategoriaProducto.categoria,
+                    urlImagen = producto.ImagenURLProducto.url
                 };
                 return SubastaConProducto;
             }

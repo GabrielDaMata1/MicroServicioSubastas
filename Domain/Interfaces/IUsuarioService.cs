@@ -9,5 +9,7 @@ namespace Domain.Interfaces
     public interface IUsuarioService
     {
         Task<Guid> ObtenerUsuarioPorIdAsync(string correo);
+
+        Task<string> ObtenerCorreoPorIdAsync(Guid idUsuario);
     }
 }

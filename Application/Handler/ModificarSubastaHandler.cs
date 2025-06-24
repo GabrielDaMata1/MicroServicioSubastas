@@ -20,12 +20,14 @@ namespace Application.Handler
         private readonly IPublishEndpoint _publishEndpoint;
         private readonly ISubastaService _subastaService;
         private readonly IUsuarioService _usuarioService;
+        private readonly ISubastaSchedule _subastaSchedule;
 
-        public ModificarSubastaHandler(ISubastaService subastaService, IPublishEndpoint publishEndpoint, IUsuarioService usuarioService)
+        public ModificarSubastaHandler(ISubastaService subastaService, IPublishEndpoint publishEndpoint, IUsuarioService usuarioService, ISubastaSchedule subastaSchedule)
         {
             _publishEndpoint = publishEndpoint;
             _subastaService = subastaService;
             _usuarioService = usuarioService;
+            _subastaSchedule= subastaSchedule;
         }
         public async Task<bool> Handle(ModificarSubastaCommand request, CancellationToken cancellationToken)
         {
@@ -55,6 +57,7 @@ namespace Application.Handler
                     throw new FalloAlModificarSubastaException("No se pudo modificar la subasta en la base de datos PostgreSQL. ");
 
                 await _publishEndpoint.Publish(new SubastaModificadaEvent(subasta, idUsuario));
+                _subastaSchedule.ReprogramarEventosDeSubasta(request.subastaDto.Id,request.subastaDto.fechaInicio,request.subastaDto.fechaFin);
                 return true;
             }
             catch (SubastaNoModificableException)
