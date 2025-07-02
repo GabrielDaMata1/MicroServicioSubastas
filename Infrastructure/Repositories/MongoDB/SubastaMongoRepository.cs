@@ -17,12 +17,15 @@ namespace Infrastructure.Repositories.MongoDB
     public class SubastaMongoRepository : ISubastaRepositoryMongo
     {
         private readonly IMongoCollection<SubastaMongo> _subastaCollection;
+        private readonly IHistorialSubastaMongoRepository _historialSubastaMongoRepository;
 
 
-        public SubastaMongoRepository(IMongoClient mongoClient)
+
+        public SubastaMongoRepository(IMongoClient mongoClient, IHistorialSubastaMongoRepository historialSubastaMongoRepository)
         {
             var database = mongoClient.GetDatabase("MicroservicioSubasta");
             _subastaCollection = database.GetCollection<SubastaMongo>("Subasta");
+            _historialSubastaMongoRepository = historialSubastaMongoRepository;
         }
 
         public async Task<HttpStatusCode> RegistrarSubastaAsync(Subasta subasta, Guid IdUsuario)
@@ -110,5 +113,35 @@ namespace Infrastructure.Repositories.MongoDB
             await _subastaCollection.UpdateOneAsync(filtro, actualizacion);
             return HttpStatusCode.OK;
         }
+
+        public async Task<List<Subasta>> ObtenerSubastasGanadasDetalle(Guid idUsuario)
+        {
+            var historial = await _historialSubastaMongoRepository.ObtenerSubastasGanadasPorUsuario(idUsuario);
+            if (historial == null || !historial.Any())
+                return new List<Subasta>();
+
+            Console.WriteLine(historial.ElementAt(0).IdUsuario);
+            Console.WriteLine(historial.ElementAt(0).IdSubasta);
+
+            var idsSubasta = historial.Select(h => h.IdSubasta).Distinct().ToList();
+
+            Console.WriteLine(idsSubasta);
+            Console.WriteLine(idsSubasta.ElementAt(0));
+
+            var idDePrueba = idsSubasta.First();
+            var existe = await _subastaCollection.Find(s => s.Id == idDePrueba).AnyAsync();
+            Console.WriteLine($"¿Existe subasta con ID {idDePrueba}? {existe}");
+
+            var filtro = Builders<SubastaMongo>.Filter.In(s => s.Id, idsSubasta);
+            var subastasMongo = await _subastaCollection.Find(filtro).ToListAsync();
+
+
+            var subastas = subastasMongo.Select(s =>SubastaFactory.CrearSubastaConId(s.Id,s.Nombre,s.Descripcion,s.ProductoId, s.FechaInicio, s.FechaFin, s.IncrementoMinimo,
+                    s.PrecioReserva,s.Estado)).ToList();
+
+
+            return subastas;
+        }
+
     }
 }
