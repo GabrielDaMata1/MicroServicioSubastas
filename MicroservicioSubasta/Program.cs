@@ -53,6 +53,7 @@ builder.Services.AddScoped<ISubastaService, SubastaService>();
 builder.Services.AddScoped<IProductoService, ProductoService>();
 builder.Services.AddScoped<IPujaService, PujaService>();
 builder.Services.AddScoped<ISubastaSchedule, SubastaSchedule>();
+builder.Services.AddScoped<ISubastaJobRepository, SubastaJobRepository>();
 
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(RegistrarSubastaCommand).Assembly));
@@ -82,6 +83,8 @@ builder.Services.AddMassTransit(x =>
     x.AddConsumer<SubastaEliminadaConsumer>();
     x.AddConsumer<SubastaActivaConsumer>();
     x.AddConsumer<SubastaAcabadaConsumer>();
+    x.AddConsumer<SubastaCompletadaConsumer>();
+    x.AddConsumer<SubastaCanceladaConsumer>();
 
     x.AddSagaStateMachine<SubastaStateMachine, SubastaState>()
         .MongoDbRepository(r =>
@@ -129,6 +132,16 @@ builder.Services.AddMassTransit(x =>
         cfg.ReceiveEndpoint("subasta-acabada-queue", e =>
         {
             e.ConfigureConsumer<SubastaAcabadaConsumer>(context);
+        });
+
+        cfg.ReceiveEndpoint("subasta-completada-queue", e =>
+        {
+            e.ConfigureConsumer<SubastaCompletadaConsumer>(context);
+        });
+
+        cfg.ReceiveEndpoint("subasta-cancelada-queue", e =>
+        {
+            e.ConfigureConsumer<SubastaCanceladaConsumer>(context);
         });
     });
 

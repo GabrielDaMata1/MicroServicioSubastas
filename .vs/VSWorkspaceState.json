@@ -1,9 +1,11 @@
 {
   "ExpandedNodes": [
     "",
+    "\\Infrastructure",
+    "\\Infrastructure\\Consumers",
     "\\MicroservicioSubasta",
     "\\MicroservicioSubasta\\Controllers"
   ],
-  "SelectedNode": "\\MicroservicioSubasta\\Controllers\\SubastaController.cs",
+  "SelectedNode": "\\Infrastructure\\Consumers\\SubastaAcabadaConsumer.cs",
   "PreviewInSolutionExplorer": false
 }
