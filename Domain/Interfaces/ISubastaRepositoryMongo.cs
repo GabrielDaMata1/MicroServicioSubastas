@@ -28,6 +28,8 @@ namespace Domain.Interfaces
 
         Task<HttpStatusCode> ActualizarEstadoSubasta(Guid idSubasta, string nuevoEstado);
 
+        Task<List<Subasta>> ObtenerSubastasGanadasDetalle(Guid idUsuario);
+
 
     }
 }

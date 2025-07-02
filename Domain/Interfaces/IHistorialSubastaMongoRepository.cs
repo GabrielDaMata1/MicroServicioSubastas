@@ -11,5 +11,6 @@ namespace Domain.Interfaces
     public interface IHistorialSubastaMongoRepository
     {
         Task<HttpStatusCode> registrarHistorialSubastaAsync(HistorialSubasta historialSubasta, string resultado);
+        Task<List<HistorialSubasta>> ObtenerSubastasGanadasPorUsuario(Guid idUsuario);
     }
 }

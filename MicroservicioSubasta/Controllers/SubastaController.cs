@@ -77,5 +77,14 @@ namespace MicroservicioSubasta.Controllers
             return Ok(resultado);
 
         }
+
+        [HttpGet("obtenerSubastasGanadasUsuario/{correo}")]
+        public async Task<IActionResult> ObtenerSubastaGanadasPorUsuario([FromRoute] string correo)
+        {
+            var dto = new ConsultarSubastasUsuarioDTO() { correoUsuario = correo };
+            var resultado = await _mediator.Send(new ConsultarSubastasGanadasUsuarioQuery(dto));
+            return Ok(resultado);
+
+        }
     }
 }

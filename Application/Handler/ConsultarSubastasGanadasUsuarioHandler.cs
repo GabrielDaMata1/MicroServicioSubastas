@@ -3,51 +3,52 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Application.Command;
 using Application.DTOs;
 using Application.Exceptions;
 using Application.Querys;
-using Application.Service;
-using Domain.Entities;
-using Domain.Events;
-using Domain.Factory;
 using Domain.Interfaces;
-using MassTransit;
 using MediatR;
 
 namespace Application.Handler
 {
-    public class ConsultarSubastasHandler : IRequestHandler<ConsultarSubastasQuery, List<HistorialSubastasDTO>>
+    public class ConsultarSubastasGanadasUsuarioHandler : IRequestHandler<ConsultarSubastasGanadasUsuarioQuery, List<HistorialSubastasGanadasDTO>>
     {
         private readonly ISubastaService _subastaService;
         private readonly IUsuarioService _usuarioService;
         private readonly IProductoService _productoService;
+        private readonly IPujaService _pujaService;
 
-        public ConsultarSubastasHandler(ISubastaService subastaService, IUsuarioService usuarioService, IProductoService productoService)
+        public ConsultarSubastasGanadasUsuarioHandler(ISubastaService subastaService, IUsuarioService usuarioService, IProductoService productoService, IPujaService pujaService    )
         {
             _subastaService = subastaService;
             _usuarioService = usuarioService;
-            _productoService= productoService;
+            _productoService = productoService;
+            _pujaService = pujaService;
         }
 
-        public async Task<List<HistorialSubastasDTO>> Handle(ConsultarSubastasQuery request, CancellationToken cancellationToken)
+        public async Task<List<HistorialSubastasGanadasDTO>> Handle(ConsultarSubastasGanadasUsuarioQuery request, CancellationToken cancellationToken)
         {
             try
             {
-                var subastas = await _subastaService.ObtenerSubastasMongo();
+                Guid idUsuario = await _usuarioService.ObtenerUsuarioPorIdAsync(request.SubastaDto.correoUsuario);
 
-                if (subastas == null || !subastas.Any())
+                var subastasGanadas = await _subastaService.ObtenerSubastasGanadasDetalleMongoAsync(idUsuario);
+
+
+                if (subastasGanadas == null || !subastasGanadas.Any())
                 {
-                    return new List<HistorialSubastasDTO>();
+                    return new List<HistorialSubastasGanadasDTO>();
                 }
-                var listaSubastaProducto = new List<HistorialSubastasDTO>();
+                var listaSubastasGanadasProducto = new List<HistorialSubastasGanadasDTO>();
 
-                foreach (var subasta in subastas)
+                foreach (var subasta in subastasGanadas)
                 {
+
                     var producto = await _productoService.ObtenerProductoPorGuid(subasta.idProductoSubasta);
 
+                    var pujaGanadora = await _pujaService.ObtenerPujaGanadoraPorIdSubasta(subasta.Id);
 
-                    listaSubastaProducto.Add(new HistorialSubastasDTO
+                    listaSubastasGanadasProducto.Add(new HistorialSubastasGanadasDTO
                     {
                         IdSubasta = subasta.Id,
                         NombreSubasta = subasta.nombreSubasta.Nombre,
@@ -57,6 +58,7 @@ namespace Application.Handler
                         FechaFin = subasta.fechaFinSubasta.fechaFin,
                         incrementoMinimo = subasta.incrementoMinimoSubasta.incrementoMinimo,
                         precioReserva = subasta.precioReservaSubasta.precioReserva,
+                        montoGanador = pujaGanadora.MontoPuja.montoPuja,
                         IdProducto = producto.Id,
                         NombreProducto = producto.NombreProducto.Nombre,
                         DescripcionProducto = producto.DescripcionProducto.descripcion,
@@ -67,11 +69,11 @@ namespace Application.Handler
                     });
                 }
 
-                return listaSubastaProducto;
+                return listaSubastasGanadasProducto;
             }
             catch (Exception ex)
             {
-                throw new FalloAlObtenerSubastasException("Ocurrió un error al obtener la subastas de la base de datos", ex);
+                throw new FalloAlObtenerSubastasException("Ocurrió un error al obtener la subastas ganadoras de la base de datos", ex);
             }
         }
     }

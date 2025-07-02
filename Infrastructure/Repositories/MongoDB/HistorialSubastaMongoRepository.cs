@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Application.Exceptions;
 using Domain.Entities;
+using Domain.Factory;
 using Domain.Interfaces;
 using Infrastructure.Mappers;
 using Infrastructure.Models.MongoDB;
@@ -37,6 +38,19 @@ namespace Infrastructure.Repositories.MongoDB
             {
                 throw new MongoRepositoryException($"Error al intentar registrar el historial de la subasta en MongoDB: {ex.Message}", ex);
             }
+        }
+
+        public async Task<List<HistorialSubasta>> ObtenerSubastasGanadasPorUsuario(Guid idUsuario)
+        {
+            var filtro = Builders<HistorialSubastaMongo>.Filter.And(
+                Builders<HistorialSubastaMongo>.Filter.Eq(s => s.IdUsuario, idUsuario),
+                Builders<HistorialSubastaMongo>.Filter.Eq(s => s.Resultado, "Ganador") 
+            );
+
+            var subastasMongo = await _historialCollection.Find(filtro).ToListAsync();
+
+            var subastas = subastasMongo.Select(s => HistorialSubastaFactory.CrearHistorialSubastaConID(s.Id, s.IdUsuario, s.IdSubasta, s.MontoFinal)).ToList(); 
+            return subastas;
         }
 
     }
