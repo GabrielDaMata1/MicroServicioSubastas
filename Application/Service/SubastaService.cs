@@ -252,5 +252,31 @@ namespace Application.Service
                 throw new MongoRepositoryException($"Error al intentar obtener las subastas detalladas ganadas en MongoDB {ex.Message}", ex);
             }
         }
+
+        public async Task<List<Subasta>> ObtenerSubastasGanadasMongoAsync()
+        {
+            try
+            {
+                var resul = await _subastaMongoRepository.ObtenerSubastasGanadas();
+                return resul;
+            }
+            catch (System.Exception ex)
+            {
+                throw new MongoRepositoryException($"Error al intentar obtener las subastas ganadas en MongoDB {ex.Message}", ex);
+            }
+        }
+
+        public async Task<HistorialSubasta> ObtenerHistorialSubastaMongoAsync(Guid idSubasta)
+        {
+            try
+            {
+                var resul = await _historialSubastaMongoRepository.ObtenerHistorialSubasta(idSubasta);
+                return resul;
+            }
+            catch (System.Exception ex)
+            {
+                throw new MongoRepositoryException($"Error al intentar obtener el historial de la subasta en MongoDB {ex.Message}", ex);
+            }
+        }
     }
 }

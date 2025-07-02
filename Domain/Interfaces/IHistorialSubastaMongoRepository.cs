@@ -12,5 +12,9 @@ namespace Domain.Interfaces
     {
         Task<HttpStatusCode> registrarHistorialSubastaAsync(HistorialSubasta historialSubasta, string resultado);
         Task<List<HistorialSubasta>> ObtenerSubastasGanadasPorUsuario(Guid idUsuario);
+
+        Task<List<HistorialSubasta>> ObtenerSubastasGanadas();
+
+        Task<HistorialSubasta> ObtenerHistorialSubasta(Guid idSubasta);
     }
 }

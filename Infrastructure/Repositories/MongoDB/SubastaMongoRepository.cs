@@ -142,6 +142,21 @@ namespace Infrastructure.Repositories.MongoDB
 
             return subastas;
         }
+        public async Task<List<Subasta>> ObtenerSubastasGanadas()
+        {
+            var historial = await _historialSubastaMongoRepository.ObtenerSubastasGanadas();
+            if (historial == null || !historial.Any())
+                return new List<Subasta>();
 
+            var idsSubasta = historial.Select(h => h.IdSubasta).Distinct().ToList();
+
+            var filtro = Builders<SubastaMongo>.Filter.In(s => s.Id, idsSubasta);
+            var subastasMongo = await _subastaCollection.Find(filtro).ToListAsync();
+
+
+            var subastas = subastasMongo.Select(s => SubastaFactory.CrearSubastaConId(s.Id, s.Nombre, s.Descripcion, s.ProductoId, s.FechaInicio, s.FechaFin, s.IncrementoMinimo,
+                    s.PrecioReserva, s.Estado)).ToList();
+            return subastas;
+        }
     }
 }
