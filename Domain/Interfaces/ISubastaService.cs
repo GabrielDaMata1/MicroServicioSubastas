@@ -41,6 +41,11 @@ namespace Domain.Interfaces
         Task<List<HistorialSubasta>> ObtenerSubastasGanadasPorUsuarioMongoAsync(Guid idUsuario);
         Task<List<Subasta>> ObtenerSubastasGanadasDetalleMongoAsync(Guid idUsuario);
 
+        Task<List<Subasta>> ObtenerSubastasGanadasMongoAsync();
+
+        Task<HistorialSubasta> ObtenerHistorialSubastaMongoAsync(Guid idSubasta);
+
+
 
     }
 }

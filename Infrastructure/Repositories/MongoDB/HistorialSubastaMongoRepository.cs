@@ -53,5 +53,25 @@ namespace Infrastructure.Repositories.MongoDB
             return subastas;
         }
 
+
+        public async Task<List<HistorialSubasta>> ObtenerSubastasGanadas()
+        {
+            var filtro = Builders<HistorialSubastaMongo>.Filter.And(
+                Builders<HistorialSubastaMongo>.Filter.Eq(s => s.Resultado, "Ganador")
+            );
+
+            var subastasMongo = await _historialCollection.Find(filtro).ToListAsync();
+
+            var subastas = subastasMongo.Select(s => HistorialSubastaFactory.CrearHistorialSubastaConID(s.Id, s.IdUsuario, s.IdSubasta, s.MontoFinal)).ToList();
+            return subastas;
+        }
+
+        public async Task<HistorialSubasta> ObtenerHistorialSubasta(Guid idSubasta)
+        {
+            var subastasMongo = await _historialCollection.Find(r => r.IdSubasta == idSubasta).FirstOrDefaultAsync();
+
+            var historial = HistorialSubastaFactory.CrearHistorialSubastaConID(subastasMongo.Id, subastasMongo.IdUsuario, subastasMongo.IdSubasta, subastasMongo.MontoFinal);
+            return historial;
+        }
     }
 }

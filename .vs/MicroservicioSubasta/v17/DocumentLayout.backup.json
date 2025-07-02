@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\ADBLA\\Documents\\GitHub\\MicroServicioSubastas\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{43EA1F79-EC15-426F-8A00-036B64975291}|Infrastructure\\Infrastructure.csproj|c:\\users\\adbla\\documents\\github\\microserviciosubastas\\infrastructure\\consumers\\subastaacabadaconsumer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43EA1F79-EC15-426F-8A00-036B64975291}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\consumers\\subastaacabadaconsumer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{60D356ED-301A-486F-B516-CC888E223BB5}|MicroservicioSubasta\\MicroservicioSubasta.csproj|c:\\users\\adbla\\documents\\github\\microserviciosubastas\\microserviciosubasta\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{60D356ED-301A-486F-B516-CC888E223BB5}|MicroservicioSubasta\\MicroservicioSubasta.csproj|solutionrelative:microserviciosubasta\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -13,10 +17,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{7DB3B946-296A-4C40-92D7-3FC42DF6281C}|Application\\Application.csproj|c:\\users\\adbla\\documents\\github\\microserviciosubastas\\application\\dtos\\historialsubastasdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7DB3B946-296A-4C40-92D7-3FC42DF6281C}|Application\\Application.csproj|solutionrelative:application\\dtos\\historialsubastasdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{43EA1F79-EC15-426F-8A00-036B64975291}|Infrastructure\\Infrastructure.csproj|c:\\users\\adbla\\documents\\github\\microserviciosubastas\\infrastructure\\consumers\\subastaacabadaconsumer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{43EA1F79-EC15-426F-8A00-036B64975291}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\consumers\\subastaacabadaconsumer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7DB3B946-296A-4C40-92D7-3FC42DF6281C}|Application\\Application.csproj|c:\\users\\adbla\\documents\\github\\microserviciosubastas\\application\\exceptions\\falloalobtenerusuarioexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -366,7 +366,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 208,
-          "SelectedChildIndex": 23,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Document",
@@ -418,8 +418,7 @@
               "ViewState": "AgIAAAYAAAAAAAAAAAAwwBIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-13T23:00:54.468Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -436,7 +435,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "HistorialSubastasDTO.cs",
               "DocumentMoniker": "C:\\Users\\ADBLA\\Documents\\GitHub\\MicroServicioSubastas\\Application\\DTOs\\HistorialSubastasDTO.cs",
               "RelativeDocumentMoniker": "Application\\DTOs\\HistorialSubastasDTO.cs",
@@ -445,8 +444,7 @@
               "ViewState": "AgIAAAsAAAAAAAAAAAAxwBoAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-14T00:44:32.875Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -463,13 +461,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "SubastaAcabadaConsumer.cs",
               "DocumentMoniker": "C:\\Users\\ADBLA\\Documents\\GitHub\\MicroServicioSubastas\\Infrastructure\\Consumers\\SubastaAcabadaConsumer.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Consumers\\SubastaAcabadaConsumer.cs",
               "ToolTip": "C:\\Users\\ADBLA\\Documents\\GitHub\\MicroServicioSubastas\\Infrastructure\\Consumers\\SubastaAcabadaConsumer.cs",
               "RelativeToolTip": "Infrastructure\\Consumers\\SubastaAcabadaConsumer.cs",
-              "ViewState": "AgIAADUAAAAAAAAAAAAmwEMAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAEoAAAAAAAAAAAAmwDYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-20T23:16:26.41Z",
               "IsPinned": true,
@@ -512,8 +510,7 @@
               "ViewState": "AgIAAC8AAAAAAAAAAAAUwEoAAAA/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-20T20:31:57.209Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -526,8 +523,7 @@
               "ViewState": "AgIAAEsAAAAAAAAAAAAiwFAAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-20T21:27:29.162Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -540,12 +536,11 @@
               "ViewState": "AgIAACkAAAAAAAAAAAAgwAsAAAA9AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-02T03:58:08.766Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "SubastaCanceladaConsumer.cs",
               "DocumentMoniker": "C:\\Users\\ADBLA\\Documents\\GitHub\\MicroServicioSubastas\\Infrastructure\\Consumers\\SubastaCanceladaConsumer.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Consumers\\SubastaCanceladaConsumer.cs",
@@ -554,34 +549,7 @@
               "ViewState": "AgIAAD8AAAAAAAAAAAAqwEoAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-02T04:35:52.273Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "FalloAlObtenerUsuarioException.cs",
-              "DocumentMoniker": "C:\\Users\\ADBLA\\Documents\\GitHub\\MicroServicioSubastas\\Application\\Exceptions\\FalloAlObtenerUsuarioException.cs",
-              "RelativeDocumentMoniker": "Application\\Exceptions\\FalloAlObtenerUsuarioException.cs",
-              "ToolTip": "C:\\Users\\ADBLA\\Documents\\GitHub\\MicroServicioSubastas\\Application\\Exceptions\\FalloAlObtenerUsuarioException.cs",
-              "RelativeToolTip": "Application\\Exceptions\\FalloAlObtenerUsuarioException.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAABiAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-02T04:55:25.427Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "FalloAlObtenerProductoException.cs",
-              "DocumentMoniker": "C:\\Users\\ADBLA\\Documents\\GitHub\\MicroServicioSubastas\\Application\\Exceptions\\FalloAlObtenerProductoException.cs",
-              "RelativeDocumentMoniker": "Application\\Exceptions\\FalloAlObtenerProductoException.cs",
-              "ToolTip": "C:\\Users\\ADBLA\\Documents\\GitHub\\MicroServicioSubastas\\Application\\Exceptions\\FalloAlObtenerProductoException.cs",
-              "RelativeToolTip": "Application\\Exceptions\\FalloAlObtenerProductoException.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAwAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-02T04:53:26.991Z",
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Bookmark",
@@ -601,6 +569,30 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "FalloAlObtenerUsuarioException.cs",
+              "DocumentMoniker": "C:\\Users\\ADBLA\\Documents\\GitHub\\MicroServicioSubastas\\Application\\Exceptions\\FalloAlObtenerUsuarioException.cs",
+              "RelativeDocumentMoniker": "Application\\Exceptions\\FalloAlObtenerUsuarioException.cs",
+              "ToolTip": "C:\\Users\\ADBLA\\Documents\\GitHub\\MicroServicioSubastas\\Application\\Exceptions\\FalloAlObtenerUsuarioException.cs",
+              "RelativeToolTip": "Application\\Exceptions\\FalloAlObtenerUsuarioException.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAABiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-02T04:55:25.427Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "FalloAlObtenerProductoException.cs",
+              "DocumentMoniker": "C:\\Users\\ADBLA\\Documents\\GitHub\\MicroServicioSubastas\\Application\\Exceptions\\FalloAlObtenerProductoException.cs",
+              "RelativeDocumentMoniker": "Application\\Exceptions\\FalloAlObtenerProductoException.cs",
+              "ToolTip": "C:\\Users\\ADBLA\\Documents\\GitHub\\MicroServicioSubastas\\Application\\Exceptions\\FalloAlObtenerProductoException.cs",
+              "RelativeToolTip": "Application\\Exceptions\\FalloAlObtenerProductoException.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-02T04:53:26.991Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 9,
               "Title": "ISubastaJobRepository.cs",
               "DocumentMoniker": "C:\\Users\\ADBLA\\Documents\\GitHub\\MicroServicioSubastas\\Domain\\Interfaces\\ISubastaJobRepository.cs",
@@ -609,8 +601,7 @@
               "RelativeToolTip": "Domain\\Interfaces\\ISubastaJobRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-02T04:14:00.044Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-02T04:14:00.044Z"
             },
             {
               "$type": "Document",
@@ -622,8 +613,7 @@
               "RelativeToolTip": "Infrastructure\\Models\\MongoDB\\SubastaJobMongo.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAABMAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-02T03:56:31.9Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-02T03:56:31.9Z"
             },
             {
               "$type": "Document",
@@ -635,12 +625,11 @@
               "RelativeToolTip": "Domain\\Events\\TemporizadorCancelarPagoEvent.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-02T01:29:34.003Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-02T01:29:34.003Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\ADBLA\\Documents\\GitHub\\MicroServicioSubastas\\MicroservicioSubasta\\Program.cs",
               "RelativeDocumentMoniker": "MicroservicioSubasta\\Program.cs",
@@ -661,8 +650,7 @@
               "RelativeToolTip": "Infrastructure\\Consumers\\SubastaCompletadaConsumer.cs",
               "ViewState": "AgIAABEAAAAAAAAAAAAAwCEAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-02T01:35:07.222Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-02T01:35:07.222Z"
             },
             {
               "$type": "Document",
@@ -674,8 +662,7 @@
               "RelativeToolTip": "Application\\Exceptions\\FalloAlObtenerSubastasException.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-14T02:09:38.92Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-14T02:09:38.92Z"
             },
             {
               "$type": "Document",
@@ -687,8 +674,7 @@
               "RelativeToolTip": "Infrastructure\\Consumers\\SubastaActivaConsumer.cs",
               "ViewState": "AgIAAAcAAAAAAAAAAAAAAA0AAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-20T21:55:42.908Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-20T21:55:42.908Z"
             },
             {
               "$type": "Document",
@@ -700,8 +686,7 @@
               "RelativeToolTip": "Domain\\Interfaces\\ISubastaSchedule.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAIwBEAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-20T22:49:59.663Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-20T22:49:59.663Z"
             },
             {
               "$type": "Document",
