@@ -13,8 +13,12 @@ namespace Application.External_Services.MassTransit
         public State Pending { get; set; }
         public State Active { get;  set; }
         public State Ended { get;set; }
+        public State Completed { get; set; }
+        public State Canceled { get; set; }
         public Event<SubastaIniciadaEvent> SubastaIniciada { get; set; }
         public Event<SubastaFinalizadaEvent> SubastaFinalizada { get; set; }
+        public Event<TemporizadorCancelarPagoEvent> SubastaCancelada { get; set; }
+        public Event<PagoRealizadoEvent> SubastaCompletada { get; set; }
 
         public SubastaStateMachine()
         {
@@ -22,6 +26,9 @@ namespace Application.External_Services.MassTransit
 
             Event(() => SubastaIniciada, x => x.CorrelateById(context => context.Message.SubastaId));
             Event(() => SubastaFinalizada, x => x.CorrelateById(context => context.Message.SubastaId));
+            Event(() => SubastaCompletada, x => x.CorrelateById(context => context.Message.idSubasta));
+            Event(() => SubastaCancelada, x => x.CorrelateById(context => context.Message.SubastaId));
+
 
             Initially(
                 When(SubastaIniciada)
@@ -50,6 +57,27 @@ namespace Application.External_Services.MassTransit
                             await ctx.Publish(new SubastaAcabadaEvent(ctx.Saga.SubastaId));
                         })
             );
+
+            During(Ended,
+            When(SubastaCompletada)
+                .TransitionTo(Completed)
+                .ThenAsync(async ctx =>
+                {
+                    await ctx.Publish(new SubastaCompletadaEvent(ctx.Saga.SubastaId));
+                })
+             );
+
+            During(Ended,
+            When(SubastaCancelada)
+                .TransitionTo(Canceled)
+                .ThenAsync(async ctx =>
+                {
+                    await ctx.Publish(new SubastaCanceladaEvent(ctx.Saga.SubastaId));
+                })
+             );
+
+
+
 
             SetCompletedWhenFinalized();
         }

@@ -37,24 +37,37 @@ namespace Infrastructure.Consumers
             try
             {
 
-                var resul = await _subastaService.ActualizarEstadoSubastaPostgreSQLAsync(context.Message.SubastaId, "Ended");
-
-                if (resul == HttpStatusCode.OK)
-                  await _subastaService.ActualizarEstadoSubastaMongoAsync(context.Message.SubastaId, "Ended");
-
                 var subasta = await _subastaService.ObtenerSubastaPorIdMongoAsync(context.Message.SubastaId);
-
-                var pujaGanadora = await _pujaService.ObtenerPujaGanadoraPorIdSubasta(context.Message.SubastaId);
-
-                var historialSubasta = HistorialSubastaFactory.CrearHistorialSubasta(pujaGanadora.IdUsuario,
-                    pujaGanadora.IdSubasta, pujaGanadora.MontoPuja.montoPuja);
-
 
                 var producto = await _productoService.ObtenerProductoPorGuid(subasta.idProductoSubasta);
 
                 var idUsuario = await _productoService.ObtenerUsuarioIdPorIdProductoAsync(producto.Id);
 
                 var correoUsuario = await _usuarioService.ObtenerCorreoPorIdAsync(idUsuario);
+
+
+                var resul = await _subastaService.ActualizarEstadoSubastaPostgreSQLAsync(context.Message.SubastaId, "Ended");
+
+                if (resul == HttpStatusCode.OK)
+                    await _subastaService.ActualizarEstadoSubastaMongoAsync(context.Message.SubastaId, "Ended");
+
+                var pujaGanadora = await _pujaService.ObtenerPujaGanadoraPorIdSubasta(context.Message.SubastaId);
+
+
+                if (pujaGanadora == null)
+                {
+                    var subastaDesierta= await _subastaService.ActualizarEstadoSubastaPostgreSQLAsync(context.Message.SubastaId, "Deserted");
+
+                    if (subastaDesierta == HttpStatusCode.OK)
+                        await _subastaService.ActualizarEstadoSubastaMongoAsync(context.Message.SubastaId, "Deserted");
+
+                    var modificarEstadoProducto = await _productoService.ModificarProductoAsync(correoUsuario, producto, "Disponible");
+
+                    return;
+                }
+
+                var historialSubasta = HistorialSubastaFactory.CrearHistorialSubasta(pujaGanadora.IdUsuario,
+                    pujaGanadora.IdSubasta, pujaGanadora.MontoPuja.montoPuja);
 
                 if (pujaGanadora.MontoPuja.montoPuja < subasta.precioReservaSubasta.precioReserva)
                 {

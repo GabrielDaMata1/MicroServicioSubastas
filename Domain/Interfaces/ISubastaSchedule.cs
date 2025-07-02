@@ -8,10 +8,12 @@ namespace Domain.Interfaces
 {
     public interface ISubastaSchedule
     {
-        void ProgramarEventosDeSubasta(Guid subastaId, DateTime fechaInicio, DateTime fechaFin);
+        Task ProgramarEventosDeSubasta(Guid subastaId, DateTime fechaInicio, DateTime fechaFin);
         Task PublicarInicio(Guid subastaId, DateTime fechaInicio, DateTime fechaFin);
         Task PublicarFin(Guid subastaId, DateTime fechaInicio, DateTime fechaFin);
 
-        void ReprogramarEventosDeSubasta(Guid subastaId, DateTime nuevaFechaInicio, DateTime nuevaFechaFin);
+        Task ReprogramarEventosDeSubasta(Guid subastaId, DateTime nuevaFechaInicio, DateTime nuevaFechaFin);
+
+        Task EliminarTemporizadorPagoSubasta(Guid subastaId);
     }
 }
