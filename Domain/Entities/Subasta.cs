@@ -19,6 +19,7 @@ namespace Domain.Entities
         public IncrementoMinimoSubastaVO incrementoMinimoSubasta { get; set; }
         public PrecioReservaSubastaVO precioReservaSubasta { get; set; }
         public EstadoSubastaVO estadoSubasta { get; set; }
+        public Guid idUsuario { get; set; }
 
         public Subasta(NombreSubastaVO nombreSubasta, DescripcionSubastaVO descripcionSubasta, Guid idProductoSubasta, FechaInicioSubastaVO fechaInicioSubasta, FechaFinSubastaVO fechaFinSubasta, IncrementoMinimoSubastaVO incrementoMinimoSubasta, PrecioReservaSubastaVO precioReservaSubasta)
         {
@@ -45,6 +46,20 @@ namespace Domain.Entities
             this.incrementoMinimoSubasta = incrementoMinimoSubasta;
             this.precioReservaSubasta = precioReservaSubasta;
             this.estadoSubasta=estadoSubasta;
+        }
+
+        public Subasta(Guid id, NombreSubastaVO nombreSubasta, DescripcionSubastaVO descripcionSubasta, Guid idProductoSubasta, FechaInicioSubastaVO fechaInicioSubasta, FechaFinSubastaVO fechaFinSubasta, IncrementoMinimoSubastaVO incrementoMinimoSubasta, PrecioReservaSubastaVO precioReservaSubasta, EstadoSubastaVO estadoSubasta, Guid idUsuario)
+        {
+            Id = id;
+            this.nombreSubasta = nombreSubasta;
+            this.descripcionSubasta = descripcionSubasta;
+            this.idProductoSubasta = idProductoSubasta;
+            this.fechaInicioSubasta = fechaInicioSubasta;
+            this.fechaFinSubasta = fechaFinSubasta;
+            this.incrementoMinimoSubasta = incrementoMinimoSubasta;
+            this.precioReservaSubasta = precioReservaSubasta;
+            this.estadoSubasta = estadoSubasta;
+            this.idUsuario = idUsuario;
         }
     }
 

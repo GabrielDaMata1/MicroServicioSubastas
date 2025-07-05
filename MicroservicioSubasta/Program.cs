@@ -85,6 +85,8 @@ builder.Services.AddMassTransit(x =>
     x.AddConsumer<SubastaAcabadaConsumer>();
     x.AddConsumer<SubastaCompletadaConsumer>();
     x.AddConsumer<SubastaCanceladaConsumer>();
+    x.AddConsumer<EntregaPremioConfirmadaConsumer>();
+
 
     x.AddSagaStateMachine<SubastaStateMachine, SubastaState>()
         .MongoDbRepository(r =>
@@ -142,6 +144,11 @@ builder.Services.AddMassTransit(x =>
         cfg.ReceiveEndpoint("subasta-cancelada-queue", e =>
         {
             e.ConfigureConsumer<SubastaCanceladaConsumer>(context);
+        });
+
+        cfg.ReceiveEndpoint("entregaPremio-confirmada-queue", e =>
+        {
+            e.ConfigureConsumer<EntregaPremioConfirmadaConsumer>(context);
         });
     });
 
