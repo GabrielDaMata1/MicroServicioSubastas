@@ -88,8 +88,8 @@ namespace Infrastructure.Repositories.MongoDB
         public async Task<Subasta> ObtenerSubasta(Guid idSubasta)
         {
             var subastaMongo = await _subastaCollection.Find(r => r.Id == idSubasta).FirstOrDefaultAsync();
-            var subasta = SubastaFactory.CrearSubastaConId(subastaMongo.Id, subastaMongo.Nombre, subastaMongo.Descripcion,
-                subastaMongo.ProductoId, subastaMongo.FechaInicio, subastaMongo.FechaFin, subastaMongo.IncrementoMinimo, subastaMongo.PrecioReserva, subastaMongo.Estado);
+            var subasta = SubastaFactory.CrearSubastaConIdUsuario(subastaMongo.Id, subastaMongo.Nombre, subastaMongo.Descripcion,
+                subastaMongo.ProductoId, subastaMongo.FechaInicio, subastaMongo.FechaFin, subastaMongo.IncrementoMinimo, subastaMongo.PrecioReserva, subastaMongo.Estado, subastaMongo.IdUsuario);
 
             return subasta;
         }

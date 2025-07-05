@@ -18,6 +18,8 @@ namespace Application.DTOs
 
         public decimal precioReserva { get; set; }
 
+        public Guid idUsuario { get; set; }
+
         public Guid IdProducto { get; set; }
         public string NombreProducto { get; set; }
         public string DescripcionProducto { get; set; }

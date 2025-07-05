@@ -48,6 +48,7 @@ namespace Application.Handler
                     FechaFin = subasta.fechaFinSubasta.fechaFin,
                     incrementoMinimo = subasta.incrementoMinimoSubasta.incrementoMinimo,
                     precioReserva = subasta.precioReservaSubasta.precioReserva,
+                    idUsuario = subasta.idUsuario,
                     IdProducto = producto.Id,
                     NombreProducto = producto.NombreProducto.Nombre,
                     DescripcionProducto = producto.DescripcionProducto.descripcion,
