@@ -154,8 +154,8 @@ namespace Infrastructure.Repositories.MongoDB
             var subastasMongo = await _subastaCollection.Find(filtro).ToListAsync();
 
 
-            var subastas = subastasMongo.Select(s => SubastaFactory.CrearSubastaConId(s.Id, s.Nombre, s.Descripcion, s.ProductoId, s.FechaInicio, s.FechaFin, s.IncrementoMinimo,
-                    s.PrecioReserva, s.Estado)).ToList();
+            var subastas = subastasMongo.Select(s => SubastaFactory.CrearSubastaConIdUsuario(s.Id, s.Nombre, s.Descripcion, s.ProductoId, s.FechaInicio, s.FechaFin, s.IncrementoMinimo,
+                    s.PrecioReserva, s.Estado, s.IdUsuario)).ToList();
             return subastas;
         }
     }
