@@ -10,5 +10,7 @@ namespace Domain.Interfaces
     public interface IPujaService
     {
         Task<Puja> ObtenerPujaGanadoraPorIdSubasta(Guid idSubasta);
+
+        Task<List<Puja>> ObtenerPujasSubasta(Guid idSubasta);
     }
 }

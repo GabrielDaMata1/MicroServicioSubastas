@@ -78,6 +78,14 @@ namespace MicroservicioSubasta.Controllers
 
         }
 
+        [HttpGet("obtenerSubastasGanadasPujas/")]
+        public async Task<IActionResult> obtenerSubastasGanadasPujas()
+        {
+            var resultado = await _mediator.Send(new ConsultarSubastasGanadasPujasQuery());
+            return Ok(resultado);
+
+        }
+
         [HttpGet("obtenerSubastasGanadasUsuario/{correo}")]
         public async Task<IActionResult> ObtenerSubastaGanadasPorUsuario([FromRoute] string correo)
         {
