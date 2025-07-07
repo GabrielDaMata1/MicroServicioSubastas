@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Application.Exceptions
 {
+    /// <summary>
+    /// Clase Exception que se encarga de manejar los errores producidos al obtener una subasta en la base de datos en MongoDB.
+    /// </summary>
     public class FalloAlObtenerSubastasException: Exception
     {
         public FalloAlObtenerSubastasException() : base("Ha ocurrido un error al obtener las subasta.") { }

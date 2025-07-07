@@ -12,9 +12,18 @@ using Domain.Value_Objects;
 
 namespace Application.Service
 {
+    /// <summary>
+    /// Clase Service que se encarga de procesar todas las operaciones sobre un producto, realizando peticiones HTTP al Microservicio Producto.
+    /// </summary>
     public class PujaService: IPujaService
     {
+        /// <summary>
+        /// Atributo que se encarga de procesar las solicitudes a servicios externos.
+        /// </summary>
         private readonly HttpClient _httpClient;
+        /// <summary>
+        /// Atributo que corresponde a las operaciones posibles que se pueden realizar sobre un usuario en el Microservicio Usuarios, el cual será inyectado por inversión de dependencias.
+        /// </summary>
         private readonly IUsuarioService _usuarioService;
 
         public PujaService(HttpClient httpClient, IUsuarioService usuarioService)
@@ -22,7 +31,11 @@ namespace Application.Service
             _httpClient = httpClient;
             _usuarioService = usuarioService;
         }
-
+        /// <summary>
+        /// Método que se encarga de obtener la puja ganadora de una subtasta por su ID en el Microservicio Pujas.
+        /// </summary>
+        /// <param name="idSubasta">Parametro que corresponde al ID de la subasta a consultar</param>
+        /// <returns>Retorna un objeto Puja con su detalle. Si no lo consigue, retorna null</returns>
         public async Task<Puja> ObtenerPujaGanadoraPorIdSubasta(Guid idSubasta)
         {
             try
@@ -65,6 +78,11 @@ namespace Application.Service
             }
         }
 
+        /// <summary>
+        /// Método que se encarga de obtener las pujas de una subtasta por su ID en el Microservicio Pujas.
+        /// </summary>
+        /// <param name="idSubasta">Parametro que corresponde al ID de la subasta a consultar</param>
+        /// <returns>Retorna una lista de objetos Puja con su detalle. Si no lo consigue, retorna null</returns>
         public async Task<List<Puja>> ObtenerPujasSubasta(Guid idSubasta)
         {
             try

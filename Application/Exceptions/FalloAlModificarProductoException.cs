@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Application.Exceptions
 {
+    /// <summary>
+    /// Clase Exception que se encarga de manejar los errores producidos al modificar un producto en el Microservicio Producto.
+    /// </summary>
     public class FalloAlModificarProductoException: Exception
     {
         public FalloAlModificarProductoException() : base("Ha ocurrido un error al modificar el producto en el Microservicio Producto.") { }

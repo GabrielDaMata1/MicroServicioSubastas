@@ -8,17 +8,38 @@ using Domain.Value_Object;
 
 namespace Domain.Entities
 {
+    /// <summary>
+    /// Clase Entity que representa a la entidad Producto en el dominio del sistema.
+    /// </summary>
     public class Producto
     {
+        /// <summary>
+        /// Atributo que corresponde al ID del producto.
+        /// </summary>
         public Guid Id { get; set; }
+        /// <summary>
+        /// Atributo que corresponde al nombre del producto.
+        /// </summary>
         public NombreProductoVO NombreProducto { get; set; }
+        /// <summary>
+        /// Atributo que corresponde a la descripción del producto.
+        /// </summary>
         public DescripcionProductoVO DescripcionProducto { get; set; }
+        /// <summary>
+        /// Atributo que corresponde a la imagen url del producto .
+        /// </summary>
         public ImagenURLProductoVO ImagenURLProducto { get; set; }
-
+        /// <summary>
+        /// Atributo que corresponde al precio base del producto.
+        /// </summary>
         public PrecioBaseProductoVO PrecioBaseProducto { get; set; }
-
+        /// <summary>
+        /// Atributo que corresponde a la categoria del producto.
+        /// </summary>
         public CategoriaProductoVO CategoriaProducto { get; set; }
-
+        /// <summary>
+        /// Atributo que corresponde al estado del producto.
+        /// </summary>
         public EstadoProductoVO EstadoProducto { get; set; }
 
         public Producto () { }

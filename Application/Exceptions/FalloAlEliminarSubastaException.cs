@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Application.Exceptions
 {
+    /// <summary>
+    /// Clase Exception que se encarga de manejar los errores producidos al eliminar una subasta en las bases de datos (PostgreSQL,MongoDB).
+    /// </summary>
     public class FalloAlEliminarSubastaException : Exception
     {
         public FalloAlEliminarSubastaException() : base("Ha ocurrido un error al eliminar la subasta.") { }

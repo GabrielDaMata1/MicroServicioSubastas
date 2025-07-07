@@ -11,12 +11,26 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Application.Service
 {
+    /// <summary>
+    /// Clase Service que se encarga de procesar todas las operaciones sobre una subasta, incluyendo las operaciones con bases de datos (PostgreSQL, MongoDB).
+    /// </summary>
     public class SubastaService : ISubastaService
-
     {
+        /// <summary>
+        /// Atributo que corresponde al repositorio de subastas en la base de datos en MongoDB.
+        /// </summary>
         private readonly ISubastaRepositoryMongo _subastaMongoRepository;
+        /// <summary>
+        /// Atributo que corresponde al repositorio de subastas en la base de datos en PostgreSQL.
+        /// </summary>
         private readonly ISubastaRepositoryPostgreSQL _subastaPostgreSQLRepository;
+        /// <summary>
+        /// Atributo que corresponde al repositorio del historial de subastas en la base de datos en MongoDB.
+        /// </summary>
         private readonly IHistorialSubastaPostgreSQLRepository _historialSubastaPostgreSQLRepository;
+        /// <summary>
+        /// Atributo que corresponde al repositorio del historial de subastas en la base de datos en PostgreSQL.
+        /// </summary>
         private readonly IHistorialSubastaMongoRepository _historialSubastaMongoRepository;
 
 
@@ -29,7 +43,15 @@ namespace Application.Service
             _historialSubastaPostgreSQLRepository = historialSubastaPostgreSqlRepository;
 
         }
-
+        /// <summary>
+        /// Metodo que se encarga de registrar una subasta en la base de datos en PostgreSQL.
+        /// </summary>
+        /// <param name="subasta">Parámetro que corresponde a un objeto Subasta con su detalle.</param>
+        /// <param name="IdUsuario">Parámetro que corresponde al ID del subastador que registra la subasta.</param>
+        /// <returns>Retorna el GUID correspondiente a la subasta dada</returns>
+        /// <exception cref="PostgresRepositoryException">
+        /// Esta excepcion ocurre si sucede un problema al registrar la subasta en la base de datos en PostgreSQL. 
+        /// </exception>
         public async Task<Guid> RegistrarSubastaPostgreSQLAsync(Subasta subasta, Guid IdUsuario)
         {
             try
@@ -42,7 +64,15 @@ namespace Application.Service
                 throw new PostgresRepositoryException($"Error al intentar registrar la subasta en PostgreSQL {ex.Message}", ex);
             }
         }
-
+        /// <summary>
+        /// Metodo que se encarga de registrar una subasta en la base de datos en MongoDB.
+        /// </summary>
+        /// <param name="subasta">Parámetro que corresponde a un objeto Subasta con su detalle.</param>
+        /// <param name="IdUsuario">Parámetro que corresponde al ID del subastador que registra la subasta.</param>
+        /// <returns>Retorna el GUID correspondiente a la subasta dada</returns>
+        /// <exception cref="MongoRepositoryException">
+        /// Esta excepcion ocurre si sucede un problema al registrar la subasta en la base de datos en MongoDB. 
+        /// </exception>
         public async Task<HttpStatusCode> RegistrarSubastaMongoAsync(Subasta subasta, Guid IdUsuario)
         {
             try
@@ -55,7 +85,15 @@ namespace Application.Service
                 throw new MongoRepositoryException($"Error al intentar registrar la subasta en MongoDB {ex.Message}", ex);
             }
         }
-
+        /// <summary>
+        /// Metodo que se encarga de modificar una subasta en la base de datos en PostgreSQL.
+        /// </summary>
+        /// <param name="subasta">Parámetro que corresponde a un objeto Subasta con su detalle.</param>
+        /// <param name="IdUsuario">Parámetro que corresponde al ID del subastador que modifica la subasta.</param>
+        /// <returns>Retorna uns estado HTTP exitoso si la operación ocurrió correctamente</returns>
+        /// <exception cref="PostgresRepositoryException">
+        /// Esta excepcion ocurre si sucede un problema al modificar la subasta en la base de datos en PostgreSQL. 
+        /// </exception>
         public async Task<HttpStatusCode> ModificarSubastaPostgreSQLAsync(Subasta subasta, Guid IdUsuario)
         {
             try
@@ -68,7 +106,15 @@ namespace Application.Service
                 throw new PostgresRepositoryException($"Error al intentar modificar la subasta en PostgreSQL {ex.Message}", ex);
             }
         }
-
+        /// <summary>
+        /// Metodo que se encarga de modificar una subasta en la base de datos en MongoDB.
+        /// </summary>
+        /// <param name="subasta">Parámetro que corresponde a un objeto Subasta con su detalle.</param>
+        /// <param name="IdUsuario">Parámetro que corresponde al ID del subastador que modifica la subasta.</param>
+        /// <returns>Retorna uns estado HTTP exitoso si la operación ocurrió correctamente</returns>
+        /// <exception cref="MongoRepositoryException">
+        /// Esta excepcion ocurre si sucede un problema al modificar la subasta en la base de datos en MongoDB. 
+        /// </exception>
         public async Task<HttpStatusCode> ModificarSubastaMongoAsync(Subasta subasta, Guid IdUsuario)
         {
             try
@@ -81,7 +127,14 @@ namespace Application.Service
                 throw new MongoRepositoryException($"Error al intentar modificar la subasta en MongoDB {ex.Message}", ex);
             }
         }
-
+        /// <summary>
+        /// Metodo que se encarga de consultar una subasta en la base de datos en MongoDB.
+        /// </summary>
+        /// <param name="idSubasta">Parámetro que corresponde al ID de la Subasta a consultar.</param>
+        /// <returns>Retorna un objeto Subasta con su detalle si la operación ocurrió correctamente</returns>
+        /// <exception cref="MongoRepositoryException">
+        /// Esta excepcion ocurre si sucede un problema al consultar la subasta en la base de datos en MongoDB. 
+        /// </exception>
         public async Task<Subasta> ObtenerSubastaPorIdMongoAsync(Guid idSubasta)
         {
             try
@@ -95,6 +148,14 @@ namespace Application.Service
             }
         }
 
+        /// <summary>
+        /// Metodo que se encarga de eliminar una subasta en la base de datos en MongoDB.
+        /// </summary>
+        /// <param name="idSubasta">Parámetro que corresponde al ID de la Subasta a eliminar.</param>
+        /// <returns>Retorna un valor booleano si la operación ocurrió correctamente</returns>
+        /// <exception cref="MongoRepositoryException">
+        /// Esta excepcion ocurre si sucede un problema al eliminar la subasta en la base de datos en MongoDB. 
+        /// </exception>
         public async Task<bool> EliminarSubastaMongoAsync(Guid idSubasta)
         {
             try
@@ -108,6 +169,14 @@ namespace Application.Service
             }
         }
 
+        /// <summary>
+        /// Metodo que se encarga de eliminar una subasta en la base de datos en PostgreSQL.
+        /// </summary>
+        /// <param name="idSubasta">Parámetro que corresponde al ID de la Subasta a eliminar.</param>
+        /// <returns>Retorna un valor booleano si la operación ocurrió correctamente</returns>
+        /// <exception cref="PostgresRepositoryException">
+        /// Esta excepcion ocurre si sucede un problema al eliminar la subasta en la base de datos en PostgreSQL. 
+        /// </exception>
         public async Task<bool> EliminarSubastaPostgreSQLAsync(Guid idSubasta)
         {
             try
@@ -120,7 +189,14 @@ namespace Application.Service
                 throw new PostgresRepositoryException($"Error al intentar eliminar la subasta en PostgreSQL {ex.Message}", ex);
             }
         }
-
+        /// <summary>
+        /// Metodo que se encarga de consultar el ID de un subastador que organizó la subasta en la base de datos en MongoDB.
+        /// </summary>
+        /// <param name="idSubasta">Parámetro que corresponde al ID de la Subasta a consultar.</param>
+        /// <returns>Retorna un GUID que le corresponde al subastador si la operación ocurrió correctamente</returns>
+        /// <exception cref="MongoRepositoryException">
+        /// Esta excepcion ocurre si sucede un problema al consultar la subasta en la base de datos en MongoDB. 
+        /// </exception>
         public async Task<Guid> ObtenerUsuarioIdPorSubastaIdMongoAsync(Guid idSubasta)
         {
             try
@@ -134,6 +210,13 @@ namespace Application.Service
             }
         }
 
+        /// <summary>
+        /// Metodo que se encarga de consultar las subastas en la base de datos en MongoDB.
+        /// </summary>
+        /// <returns>Retorna una lista de objetos Subasta con su detalle si la operación ocurrió correctamente</returns>
+        /// <exception cref="MongoRepositoryException">
+        /// Esta excepcion ocurre si sucede un problema al consultar la subasta en la base de datos en MongoDB. 
+        /// </exception>
         public async Task<List<Subasta>> ObtenerSubastasMongo()
         {
             try
@@ -146,6 +229,14 @@ namespace Application.Service
                 throw new MongoRepositoryException($"Error al intentar obtener las subastas en MongoDB {ex.Message}", ex);
             }
         }
+
+        /// <summary>
+        /// Metodo que se encarga de consultar una subasta específica en la base de datos en MongoDB.
+        /// </summary>
+        /// <returns>Retorna un objeto Subasta con su detalle si la operación ocurrió correctamente</returns>
+        /// <exception cref="MongoRepositoryException">
+        /// Esta excepcion ocurre si sucede un problema al consultar la subasta en la base de datos en MongoDB. 
+        /// </exception>
 
         public async Task<Subasta> ObtenerSubastaMongoAsync(Guid idSubasta)
         {
@@ -160,6 +251,14 @@ namespace Application.Service
             }
         }
 
+        /// <summary>
+        /// Metodo que se encarga de consultar las subastas organizadas por un subastador en la base de datos en MongoDB.
+        /// </summary>
+        /// <param name="idUsuario">Parámetro que corresponde al ID del subastador a consultar.</param>
+        /// <returns>Retorna una lista de objetos Subasta con su detalle si la operación ocurrió correctamente</returns>
+        /// <exception cref="MongoRepositoryException">
+        /// Esta excepcion ocurre si sucede un problema al consultar la subasta en la base de datos en MongoDB. 
+        /// </exception>
         public async Task<List<Subasta>> ObtenerSubastasPorUsuarioMongoAsync(Guid idUsuario)
         {
             try
@@ -174,6 +273,16 @@ namespace Application.Service
 
         }
 
+        /// <summary>
+        /// Metodo que se encarga de modificar el estado de una subasta en la base de datos en MongoDB.
+        /// </summary>
+        /// <param name="idSubasta">Parámetro que corresponde al ID de la subasta a modificar.</param>
+        /// <param name="nuevoEstado">Parámetro que corresponde al nuevo estado de la subasta a asignar.</param>
+        /// <returns>Retorna uns estado HTTP exitoso si la operación ocurrió correctamente</returns>
+        /// <exception cref="MongoRepositoryException">
+        /// Esta excepcion ocurre si sucede un problema al modificar la subasta en la base de datos en MongoDB. 
+        /// </exception>
+
         public async Task<HttpStatusCode> ActualizarEstadoSubastaMongoAsync(Guid idSubasta, string nuevoEstado)
         {
             try
@@ -187,6 +296,15 @@ namespace Application.Service
             }
         }
 
+        /// <summary>
+        /// Metodo que se encarga de modificar el estado de una subasta en la base de datos en PostgreSQL.
+        /// </summary>
+        /// <param name="idSubasta">Parámetro que corresponde al ID de la subasta a modificar.</param>
+        /// <param name="nuevoEstado">Parámetro que corresponde al nuevo estado de la subasta a asignar.</param>
+        /// <returns>Retorna uns estado HTTP exitoso si la operación ocurrió correctamente</returns>
+        /// <exception cref="PostgresRepositoryException">
+        /// Esta excepcion ocurre si sucede un problema al modificar la subasta en la base de datos en PostgreSQL. 
+        /// </exception>
         public async Task<HttpStatusCode> ActualizarEstadoSubastaPostgreSQLAsync(Guid idSubasta, string nuevoEstado)
         {
             try
@@ -200,6 +318,15 @@ namespace Application.Service
             }
         }
 
+        /// <summary>
+        /// Metodo que se encarga de registrar el historial de una subasta en la base de datos en MongoDB.
+        /// </summary>
+        /// <param name="historialSubasta">Parámetro que corresponde a un objeto HistorialSubasta con su detalle.</param>
+        /// <param name="resultado">Parámetro que corresponde al resultado final de la subasta.</param>
+        /// <returns>Retorna uns estado HTTP exitoso si la operación ocurrió correctamente</returns>
+        /// <exception cref="MongoRepositoryException">
+        /// Esta excepcion ocurre si sucede un problema al registrar el historial de una subasta en la base de datos en MongoDB. 
+        /// </exception>
         public async Task<HttpStatusCode> RegistrarHistorialSubastaMongoAsync(HistorialSubasta historialSubasta, string resultado)
         {
             try
@@ -213,6 +340,15 @@ namespace Application.Service
             }
         }
 
+        /// <summary>
+        /// Metodo que se encarga de registrar el historial de una subasta en la base de datos en PostgreSQL.
+        /// </summary>
+        /// <param name="historialSubasta">Parámetro que corresponde a un objeto HistorialSubasta con su detalle.</param>
+        /// <param name="resultado">Parámetro que corresponde al resultado final de la subasta.</param>
+        /// <returns>Retorna uns estado HTTP exitoso si la operación ocurrió correctamente</returns>
+        /// <exception cref="PostgresRepositoryException">
+        /// Esta excepcion ocurre si sucede un problema al registrar el historial de una subasta en la base de datos en PostgreSQL. 
+        /// </exception>
         public async Task<Guid> RegistrarHistorialSubastaPostgreSQLAsync(HistorialSubasta historialSubasta, string resultado)
         {
             try
@@ -226,6 +362,14 @@ namespace Application.Service
             }
         }
 
+        /// <summary>
+        /// Metodo que se encarga de consultar las subastas ganadas por un usuario en la base de datos en MongoDB.
+        /// </summary>
+        /// <param name="idUsuario">Parámetro que corresponde al ID del usuario a consultar.</param>
+        /// <returns>Retorna una lista de objetos HistorialSubasta con su detalle si la operación ocurrió correctamente</returns>
+        /// <exception cref="MongoRepositoryException">
+        /// Esta excepcion ocurre si sucede un problema al consultar el historial de subastas en la base de datos en MongoDB. 
+        /// </exception>
         public async Task<List<HistorialSubasta>> ObtenerSubastasGanadasPorUsuarioMongoAsync(Guid idUsuario)
         {
 
@@ -240,6 +384,15 @@ namespace Application.Service
             }
         }
 
+        /// <summary>
+        /// Metodo que se encarga de consultar las subastas ganadas por un usuario con su detalle en la base de datos en MongoDB.
+        /// </summary>
+        /// <param name="idUsuario">Parámetro que corresponde al ID del usuario a consultar.</param>
+        /// <returns>Retorna una lista de objetos HistorialSubasta con su detalle si la operación ocurrió correctamente</returns>
+        /// <exception cref="MongoRepositoryException">
+        /// Esta excepcion ocurre si sucede un problema al consultar el historial de subastas en la base de datos en MongoDB. 
+        /// </exception>
+
         public async Task<List<Subasta>> ObtenerSubastasGanadasDetalleMongoAsync(Guid idUsuario)
         {
             try
@@ -253,6 +406,13 @@ namespace Application.Service
             }
         }
 
+        /// <summary>
+        /// Metodo que se encarga de consultar las subastas ganadas en la base de datos en MongoDB.
+        /// </summary>
+        /// <returns>Retorna una lista de objetos Subasta con su detalle si la operación ocurrió correctamente</returns>
+        /// <exception cref="MongoRepositoryException">
+        /// Esta excepcion ocurre si sucede un problema al consultar la subasta en la base de datos en MongoDB. 
+        /// </exception>
         public async Task<List<Subasta>> ObtenerSubastasGanadasMongoAsync()
         {
             try
@@ -265,7 +425,14 @@ namespace Application.Service
                 throw new MongoRepositoryException($"Error al intentar obtener las subastas ganadas en MongoDB {ex.Message}", ex);
             }
         }
-
+        /// <summary>
+        /// Metodo que se encarga de consultar el historial de una subasta en la base de datos en MongoDB.
+        /// </summary>
+        /// <param name="idSubasta">Parámetro que corresponde al ID de la subasta a consultar.</param>
+        /// <returns>Retorna un de objeto HistorialSubasta con su detalle si la operación ocurrió correctamente</returns>
+        /// <exception cref="MongoRepositoryException">
+        /// Esta excepcion ocurre si sucede un problema al consultar el historial de subasta en la base de datos en MongoDB. 
+        /// </exception>
         public async Task<HistorialSubasta> ObtenerHistorialSubastaMongoAsync(Guid idSubasta)
         {
             try
