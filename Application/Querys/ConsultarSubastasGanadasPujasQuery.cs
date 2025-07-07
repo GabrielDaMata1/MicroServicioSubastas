@@ -8,6 +8,9 @@ using MediatR;
 
 namespace Application.Querys
 {
+    /// <summary>
+    /// Clase Query que se encarga de enviar la solicitud para consultar todas las subastas con sus pujas.
+    /// </summary>
     public class ConsultarSubastasGanadasPujasQuery : IRequest<List<HistorialPujasUsuarioDTO>>
     {
     }

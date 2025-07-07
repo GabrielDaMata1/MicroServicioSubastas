@@ -8,13 +8,19 @@ using MediatR;
 
 namespace Application.Querys
 {
+    /// <summary>
+    /// Clase Query que se encarga de enviar la solicitud para consultar una subasta en específico.
+    /// </summary>
     public class ConsultarSubastaQuery:IRequest<HistorialSubastasDTO>
     {
-    public ConsultarSubastaDTO SubastaDto { get; set; }
+        /// <summary>
+        /// Atributo DTO que contiene el ID de la subasta a consultar.
+        /// </summary>
+        public ConsultarSubastaDTO SubastaDto { get; set; }
 
-    public ConsultarSubastaQuery(ConsultarSubastaDTO subastaDto)
-    {
+        public ConsultarSubastaQuery(ConsultarSubastaDTO subastaDto)
+        {
         SubastaDto = subastaDto;
-    }
+        }
     }
 }

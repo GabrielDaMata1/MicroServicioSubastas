@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Application.Exceptions
 {
+    /// <summary>
+    /// Clase Exception que se encarga de manejar los errores producidos al intentar modificar una subasta que ya ha comenzado.
+    /// </summary>
     public class SubastaNoModificableException : Exception
     {
         public SubastaNoModificableException()

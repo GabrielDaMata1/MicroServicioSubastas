@@ -17,10 +17,22 @@ using MediatR;
 
 namespace Application.Handler
 {
+    /// <summary>
+    /// Clase Handler que se encarga consultar todas las subastas.
+    /// </summary>
     public class ConsultarSubastasHandler : IRequestHandler<ConsultarSubastasQuery, List<HistorialSubastasDTO>>
     {
+        /// <summary>
+        /// Atributo que corresponde a las operaciones posibles que se pueden realizar sobre una subasta, el cual será inyectado por inversión de dependencias.
+        /// </summary>
         private readonly ISubastaService _subastaService;
+        /// <summary>
+        /// Atributo que corresponde a las operaciones posibles que se pueden realizar sobre un usuario en el Microservicio Usuarios, el cual será inyectado por inversión de dependencias.
+        /// </summary>
         private readonly IUsuarioService _usuarioService;
+        /// <summary>
+        /// Atributo que corresponde a las operaciones posibles que se pueden realizar sobre un producto en el Microservicio Producto, el cual será inyectado por inversión de dependencias.
+        /// </summary>
         private readonly IProductoService _productoService;
 
         public ConsultarSubastasHandler(ISubastaService subastaService, IUsuarioService usuarioService, IProductoService productoService)
@@ -30,12 +42,21 @@ namespace Application.Handler
             _productoService= productoService;
         }
 
+        /// <summary>
+        /// Metodo que se encarga de procesar la consultas de todas las subastas.
+        /// </summary>
+        /// <returns>Retorna una lista de DTOs con los datos de las subastas .</returns>
+        /// <exception cref="FalloAlObtenerSubastasException">
+        /// Esta excepcion ocurre si no se pudo obtener la subasta en la base de datos de MongoDB o si ocurre un error inesperado.
+        /// </exception>
         public async Task<List<HistorialSubastasDTO>> Handle(ConsultarSubastasQuery request, CancellationToken cancellationToken)
         {
             try
             {
+                //Se obtienen todas las subastas en la base de datos en MongoDB
                 var subastas = await _subastaService.ObtenerSubastasMongo();
 
+                //En caso de que la consulta retorne null, se devuelve una lista vacía
                 if (subastas == null || !subastas.Any())
                 {
                     return new List<HistorialSubastasDTO>();
@@ -44,6 +65,7 @@ namespace Application.Handler
 
                 foreach (var subasta in subastas)
                 {
+                    //Se obtiene el producto que se está subastando desde el Microservicio de Producto
                     var producto = await _productoService.ObtenerProductoPorGuid(subasta.idProductoSubasta);
 
 

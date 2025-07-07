@@ -8,12 +8,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistance
 {
+    /// <summary>
+    /// Clase persistance que representa el contexto de base de datos en PostgreSQL del Microservicio Subasta.
+    /// </summary>
     public class SubastaDbContext : DbContext
     {
         public SubastaDbContext(DbContextOptions<SubastaDbContext> options) : base(options) { }
 
-
+        /// <summary>
+        /// Atributo que corresponde a la tabla Subasta en la base de datos PostgreSQL.
+        /// </summary>
         public DbSet<SubastaPostgreSQL> Subasta { get; set; }
+        /// <summary>
+        /// Atributo que corresponde a la tabla HistorialSubasta en la base de datos PostgreSQL.
+        /// </summary>
         public DbSet<HistorialSubastasPostgreSQL> HistorialSubasta { get; set; }
 
 

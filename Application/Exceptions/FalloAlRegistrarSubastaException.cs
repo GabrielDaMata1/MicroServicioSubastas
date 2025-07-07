@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Application.Exceptions
 {
+    /// <summary>
+    /// Clase Exception que se encarga de manejar los errores producidos al registrar una subasta en las bases de datos (PostgreSQL,MongoDB).
+    /// </summary>
     public class FalloAlRegistrarSubastaException : Exception
     {
         public FalloAlRegistrarSubastaException() : base("Ha ocurrido un error al registrar la subasta.") { }

@@ -14,18 +14,29 @@ using MongoDB.Driver;
 
 namespace Infrastructure.Repositories.MongoDB
 {
+    /// <summary>
+    /// Clase repository que implementa las operaciones que se pueden realizar sobre el historial de subastas almacenadas en MongoDB.
+    /// </summary>
     public class HistorialSubastaMongoRepository: IHistorialSubastaMongoRepository
-
     {
-    private readonly IMongoCollection<HistorialSubastaMongo> _historialCollection;
+        /// <summary>
+        /// Atributo que corresponde a la colección de historial de subastas en la base de datos en MongoDB.
+        /// </summary>
+        private readonly IMongoCollection<HistorialSubastaMongo> _historialCollection;
 
 
-    public HistorialSubastaMongoRepository(IMongoClient mongoClient)
-    {
-        var database = mongoClient.GetDatabase("MicroservicioSubasta");
-        _historialCollection = database.GetCollection<HistorialSubastaMongo>("HistorialSubasta");
-    }
+        public HistorialSubastaMongoRepository(IMongoClient mongoClient)
+        {
+            var database = mongoClient.GetDatabase("MicroservicioSubasta");
+            _historialCollection = database.GetCollection<HistorialSubastaMongo>("HistorialSubasta");
+        }
 
+        /// <summary>
+        /// Metodo que se encarga de registrar el historial de una subasta en la base de datos en MongoDB.
+        /// </summary>
+        /// <param name="historialSubasta">Parámetro que corresponde a un objeto HistorialSubasta con su detalle.</param>
+        /// <param name="resultado">Parámetro que corresponde al resultado final de la subasta.</param>
+        /// <returns>Retorna uns estado HTTP exitoso si la operación ocurrió correctamente</returns>
         public async Task<HttpStatusCode> registrarHistorialSubastaAsync(HistorialSubasta historialSubasta, string resultado)
         {
             try
@@ -39,7 +50,11 @@ namespace Infrastructure.Repositories.MongoDB
                 throw new MongoRepositoryException($"Error al intentar registrar el historial de la subasta en MongoDB: {ex.Message}", ex);
             }
         }
-
+        /// <summary>
+        /// Metodo que se encarga de consultar las subastas ganadas por un usuario en la base de datos en MongoDB.
+        /// </summary>
+        /// <param name="idUsuario">Parámetro que corresponde al ID del usuario a consultar.</param>
+        /// <returns>Retorna una lista de objetos HistorialSubasta con su detalle si la operación ocurrió correctamente</returns>
         public async Task<List<HistorialSubasta>> ObtenerSubastasGanadasPorUsuario(Guid idUsuario)
         {
             var filtro = Builders<HistorialSubastaMongo>.Filter.And(
@@ -53,7 +68,10 @@ namespace Infrastructure.Repositories.MongoDB
             return subastas;
         }
 
-
+        /// <summary>
+        /// Metodo que se encarga de consultar las subastas ganadas en la base de datos en MongoDB.
+        /// </summary>
+        /// <returns>Retorna una lista de objetos Subasta con su detalle si la operación ocurrió correctamente</returns>
         public async Task<List<HistorialSubasta>> ObtenerSubastasGanadas()
         {
             var filtro = Builders<HistorialSubastaMongo>.Filter.And(
@@ -65,7 +83,11 @@ namespace Infrastructure.Repositories.MongoDB
             var subastas = subastasMongo.Select(s => HistorialSubastaFactory.CrearHistorialSubastaConID(s.Id, s.IdUsuario, s.IdSubasta, s.MontoFinal)).ToList();
             return subastas;
         }
-
+        /// <summary>
+        /// Metodo que se encarga de consultar el historial de una subasta en la base de datos en MongoDB.
+        /// </summary>
+        /// <param name="idSubasta">Parámetro que corresponde al ID de la subasta a consultar.</param>
+        /// <returns>Retorna un de objeto HistorialSubasta con su detalle si la operación ocurrió correctamente</returns>
         public async Task<HistorialSubasta> ObtenerHistorialSubasta(Guid idSubasta)
         {
             var subastasMongo = await _historialCollection.Find(r => r.IdSubasta == idSubasta).FirstOrDefaultAsync();

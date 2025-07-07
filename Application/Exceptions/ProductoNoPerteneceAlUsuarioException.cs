@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Application.Exceptions
 {
+    /// <summary>
+    /// Clase Exception que se encarga de manejar los errores producidos al intentar registrar una subasta con un producto que no pertenece al usuario autenticado.
+    /// </summary>
     public class ProductoNoPerteneceAlUsuarioException : Exception
     {
         public ProductoNoPerteneceAlUsuarioException()

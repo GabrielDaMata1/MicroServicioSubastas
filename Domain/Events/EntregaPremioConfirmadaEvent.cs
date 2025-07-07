@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Domain.Events
 {
+    /// <summary>
+    /// Clase Event que es consumida por un consumidor para que modifique el estado de una subasta a "Delivered"
+    /// </summary>
     public record EntregaPremioConfirmadaEvent(Guid idSubasta);
 
 }

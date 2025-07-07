@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Application.Exceptions
 {
+    /// <summary>
+    /// Clase Exception que se encarga de manejar los errores producidos al obtener un producto en el Microservicio Producto.
+    /// </summary>
     public class FalloAlObtenerProductoException: Exception
     {
         public FalloAlObtenerProductoException() : base("Ha ocurrido un error al obtener el producto.") { }

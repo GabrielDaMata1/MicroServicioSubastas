@@ -7,5 +7,8 @@ using Domain.Entities;
 
 namespace Domain.Events
 {
+    /// <summary>
+    /// Clase Event que es consumida por un consumidor para que modifique la subasta en la base de datos en MongoDB
+    /// </summary>
     public record SubastaModificadaEvent(Subasta subasta, Guid idUsuario);
 }
