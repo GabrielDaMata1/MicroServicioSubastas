@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35931.197 d17.13
+VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroservicioSubasta", "MicroservicioSubasta\MicroservicioSubasta.csproj", "{60D356ED-301A-486F-B516-CC888E223BB5}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{7DB3B946-296A-4C40-92D7-3FC42DF6281C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{43EA1F79-EC15-426F-8A00-036B64975291}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestMicroservicioSubasta", "TestMicroservicioSubasta\TestMicroservicioSubasta.csproj", "{55295465-6A62-49F8-8E19-BE69F5829B02}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{43EA1F79-EC15-426F-8A00-036B64975291}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43EA1F79-EC15-426F-8A00-036B64975291}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43EA1F79-EC15-426F-8A00-036B64975291}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55295465-6A62-49F8-8E19-BE69F5829B02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55295465-6A62-49F8-8E19-BE69F5829B02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55295465-6A62-49F8-8E19-BE69F5829B02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55295465-6A62-49F8-8E19-BE69F5829B02}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

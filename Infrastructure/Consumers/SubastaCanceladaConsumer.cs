@@ -33,13 +33,18 @@ namespace Infrastructure.Consumers
         /// Atributo que corresponde a las operaciones posibles que se pueden realizar sobre un usuario en el Microservicio Usuarios, el cual será inyectado por inversión de dependencias.
         /// </summary>
         private readonly IUsuarioService _usuarioService;
+        /// <summary>
+        /// Atributo que corresponde a las operaciones posibles que se pueden realizar sobre las notificaciones en el Microservicio Notificaciones, el cual será inyectado por inversión de dependencias.
+        /// </summary>
+        private readonly INotificacionService _notificacionService;
 
-        public SubastaCanceladaConsumer(ISubastaService subastaService, ISubastaSchedule subastaSchedule, IProductoService productoService, IUsuarioService usuarioService)
+        public SubastaCanceladaConsumer(ISubastaService subastaService, ISubastaSchedule subastaSchedule, IProductoService productoService, IUsuarioService usuarioService, INotificacionService notificacionService)
         {
             _subastaService = subastaService;
             _subastaSchedule = subastaSchedule;
             _productoService = productoService;
             _usuarioService = usuarioService;
+            _notificacionService = notificacionService;
         }
 
         /// <summary>
@@ -113,6 +118,20 @@ namespace Infrastructure.Consumers
              //En caso de que la modificación falle en el Microservicio Producto, se lanza la excepción
               if (!modificarEstadoProducto)
                   throw new FalloAlModificarProductoException();
+              //Se obtiene el ID del usuario ganador de la subasta
+              var historialSubasta = await _subastaService.ObtenerHistorialSubastaMongoAsync(context.Message.idSubasta);
+
+              //Se obtiene el correo del usuario ganador de la subasta desde el Microservicio Usuarios
+              var correoUsuarioGanador = await _usuarioService.ObtenerCorreoPorIdAsync(historialSubasta.IdUsuario);
+
+              //Se le notifica al usuario y al subastador sobre la cancelación de la subasta
+              var notificacionUsuarios = await _notificacionService.EnviarCorreoUsuariosSubastaCancelada(correoUsuario,
+                  correoUsuarioGanador, subasta.nombreSubasta.Nombre, producto.NombreProducto.Nombre);
+
+              //En caso de que el envio de correo falle en el Microservicio Notificaciones, se lanza la excepción
+              if (!notificacionUsuarios)
+                  throw new FalloAlEnviarCorreoException("Ha ocurrido un error al notificar al usuario ganador y al subastador");
+
           }
           catch (FalloAlModificarSubastaException)
           {
@@ -129,6 +148,10 @@ namespace Infrastructure.Consumers
           catch (FalloAlObtenerUsuarioException)
           {
              throw;
+          }
+          catch (FalloAlEnviarCorreoException)
+          {
+              throw;
           }
           catch (Exception ex)
           {

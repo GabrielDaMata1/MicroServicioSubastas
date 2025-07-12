@@ -13,7 +13,7 @@ using Domain.Value_Objects;
 namespace Application.Service
 {
     /// <summary>
-    /// Clase Service que se encarga de procesar todas las operaciones sobre un producto, realizando peticiones HTTP al Microservicio Producto.
+    /// Clase Service que se encarga de procesar todas las operaciones sobre una puja, realizando peticiones HTTP al Microservicio Pujas.
     /// </summary>
     public class PujaService: IPujaService
     {

@@ -6,6 +6,6 @@
     public class PostgresRepositoryException: System.Exception
     {
         public PostgresRepositoryException() { }
-        public PostgresRepositoryException(string message, System.Exception innerException) : base("message", innerException) { }
+        public PostgresRepositoryException(string message, System.Exception innerException) : base(message, innerException) { }
     }
 }

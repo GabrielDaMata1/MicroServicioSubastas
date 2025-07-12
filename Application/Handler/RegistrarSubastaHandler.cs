@@ -117,6 +117,14 @@ namespace Application.Handler
 
                 return true;
             }
+            catch (ProductoNoPerteneceAlUsuarioException)
+            {
+                throw;
+            }
+            catch (ProductoYaSubastandoException)
+            {
+                throw;
+            }
             catch (FalloAlRegistrarSubastaException)
             {
                 throw;

@@ -38,16 +38,21 @@ namespace Infrastructure.Consumers
         /// Atributo que corresponde a las operaciones posibles que se pueden realizar sobre un producto en el Microservicio Producto, el cual será inyectado por inversión de dependencias.
         /// </summary>
         private readonly IProductoService _productoService;
+        /// <summary>
+        /// Atributo que corresponde a las operaciones posibles que se pueden realizar sobre las notificaciones en el Microservicio Notificaciones, el cual será inyectado por inversión de dependencias.
+        /// </summary>
+        private readonly INotificacionService _notificacionService;
 
 
 
-        public SubastaAcabadaConsumer(ISubastaService subastaService, IPublishEndpoint publish, IPujaService pujaService, IProductoService productoService, IUsuarioService usuarioService)
+        public SubastaAcabadaConsumer(ISubastaService subastaService, IPublishEndpoint publish, IPujaService pujaService, IProductoService productoService, IUsuarioService usuarioService, INotificacionService notificacionService)
         {
             _subastaService = subastaService;
             _publish = publish;
             _pujaService = pujaService;
             _productoService = productoService;
-            _usuarioService= usuarioService;
+            _usuarioService = usuarioService;
+            _notificacionService = notificacionService;
         }
 
         /// <summary>
@@ -149,6 +154,27 @@ namespace Infrastructure.Consumers
                     //En caso de que la modificación falle en el Microservicio Producto, se lanza la excepción
                     if (!modificarEstadoProducto)
                         throw new FalloAlModificarProductoException();
+
+                    //Se obtiene el usuario de que ganó la subasta
+                    var correoGanador = await _usuarioService.ObtenerCorreoPorIdAsync(pujaGanadora.IdUsuario);
+                    //Se envia la notificación al usuario de que ganó la subasta
+                    var notificacionUsuario = await _notificacionService.EnviarNotificacionUsuarioGanadorSubasta(
+                        correoGanador, pujaGanadora.MontoPuja.montoPuja, subasta.nombreSubasta.Nombre,
+                        producto.NombreProducto.Nombre);
+
+                    //En caso de que el envio de correo falle en el Microservicio Notificaciones, se lanza la excepción
+                    if (!notificacionUsuario)
+                        throw new FalloAlEnviarCorreoException("Ha ocurrido un error al notificar al usuario ganador");
+
+                    //Se envia la notificación al subastador que organizó la subasta
+                    var notificacionSubastador = await _notificacionService.EnviarNotificacionSubastadorSubastaFinalizada(correoUsuario, pujaGanadora.MontoPuja.montoPuja, subasta.nombreSubasta.Nombre,
+                            producto.NombreProducto.Nombre, correoGanador);
+
+                    //En caso de que el envio de correo falle en el Microservicio Notificaciones, se lanza la excepción
+                    if (!notificacionSubastador)
+                        throw new FalloAlEnviarCorreoException("Ha ocurrido un error al notificar al subastador");
+
+
                 }
 
             }
@@ -157,6 +183,10 @@ namespace Infrastructure.Consumers
                 throw;
             }
             catch (FalloAlModificarProductoException)
+            {
+                throw;
+            }
+            catch (FalloAlEnviarCorreoException)
             {
                 throw;
             }
