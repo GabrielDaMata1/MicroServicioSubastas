@@ -110,7 +110,7 @@ namespace Application.Handler
             {
                 throw;
             }
-            catch (SubastaNoModificableException)
+            catch (SubastaNoEliminableException)
             {
                 throw;
             }

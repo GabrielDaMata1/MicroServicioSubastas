@@ -54,6 +54,8 @@ builder.Services.AddScoped<IProductoService, ProductoService>();
 builder.Services.AddScoped<IPujaService, PujaService>();
 builder.Services.AddScoped<ISubastaSchedule, SubastaSchedule>();
 builder.Services.AddScoped<ISubastaJobRepository, SubastaJobRepository>();
+builder.Services.AddScoped<INotificacionService, NotificacionService>();
+
 
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(RegistrarSubastaCommand).Assembly));
